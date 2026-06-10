@@ -1,0 +1,47 @@
+# <Project Name> — Codebase Map
+_Last updated: <date>_
+
+## Identity
+<!-- what it is, version, languages, frameworks, min runtime versions -->
+
+## Stack & build
+<!-- package manager, build tool, bundler, local env -->
+
+## Commands
+| Action | Command |
+|---|---|
+| Run dev | |
+| Run all tests | |
+| Run one test | |
+| Lint | |
+| Typecheck | |
+| Build | |
+
+## Bootstrap flow
+<!-- entry point → loader/init → where hooks/routes/handlers register -->
+
+## Directory layout
+<!-- one line per top-level folder -->
+
+## Surfaces
+| Name | Type | File:Line | Auth/Cap | Purpose |
+|---|---|---|---|---|
+
+## Data
+<!-- storage, schema location, migration pattern, owned keys/options -->
+
+## Assets
+<!-- frontend source vs built paths, enqueue/import points -->
+
+## External services
+<!-- APIs, SDKs, credential locations -->
+
+## Conventions
+<!-- naming, error handling, validation, i18n, escaping — as actually used -->
+
+## Where to add a <thing>
+<!-- only the extension points this project actually has -->
+
+## Risks & gotchas
+
+## Open questions
