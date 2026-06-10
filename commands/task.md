@@ -1,14 +1,16 @@
 ---
-description: Work on a task using the codebase map and the universal task loop
+description: Work on a task with the codebase map as context
 argument-hint: <task description>
 ---
 
-Read .claude/CODEBASE_MAP.md, the project CLAUDE.md, and the last 10 entries
-of .claude/SESSION_LOG.md (skip any that don't exist — if the map is missing,
-tell me to run /onboard first and stop).
+Read `.claude/CODEBASE_MAP.md`, the project CLAUDE.md, and recent entries of
+`.claude/SESSION_LOG.md`. If there is no map, tell me to run /onboard and stop.
 
-Then follow the Phase 4 task loop from ~/.claude/universal-kit/prompts/01-onboarding.md
-(restate → plan → implement → security gate → verify → self-review →
-report + append to SESSION_LOG.md) for this task:
+Do the task below to mergeable quality, following the project's conventions.
+Constraints: minimal diff; ask before adding dependencies; don't commit
+unless I ask. If reality contradicts the map, update the map.
+
+When done, report what changed and how you verified it, and append a short
+entry to `.claude/SESSION_LOG.md`.
 
 TASK: $ARGUMENTS

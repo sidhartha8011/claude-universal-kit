@@ -1,11 +1,11 @@
 ---
-description: Systematic root-cause debugging — reproduce, localize, explain, then fix
+description: Root-cause debugging — find the mechanism before fixing
 argument-hint: <symptom — what's broken>
 ---
 
-Read ~/.claude/universal-kit/prompts/04-debug.md and follow it.
+Something is broken. Find the root cause — the mechanism, not the symptom —
+before changing any code, reproducing it first if at all possible. Then
+apply the minimal fix, prove the repro now passes, and leave behind a
+regression test that would have caught it.
 
 SYMPTOM: $ARGUMENTS
-
-Ask me for EXPECTED behavior and REPRO steps only if you can't infer or
-discover them yourself.

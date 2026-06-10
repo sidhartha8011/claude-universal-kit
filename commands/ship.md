@@ -1,10 +1,13 @@
 ---
-description: Harden a finished feature — diff audit, review, security, tests, verification
+description: Harden a finished feature before merge
 argument-hint: [branch or feature name]
 ---
 
-Read ~/.claude/universal-kit/prompts/03-review-and-ship.md and follow it for:
-$ARGUMENTS
+The work below is functionally complete. Get it to merge quality: review
+the full diff against the default branch, address correctness and security
+issues, fill thin test coverage, and verify the feature end-to-end with
+proof. Flag anything in the diff that doesn't belong to this feature.
+Don't commit or push unless I say so.
 
-If no branch/feature is given, run it against the current uncommitted/branch
-changes vs the default branch.
+SCOPE: $ARGUMENTS
+(if empty: current branch / uncommitted changes vs the default branch)
