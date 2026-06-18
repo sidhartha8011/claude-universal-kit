@@ -82,6 +82,19 @@ notes" below for why.)
 
 ---
 
+## Migrating from an older install?
+
+If you bootstrapped before **June 2025**, ECC is still loaded in your session and bleeding ~5,000 tokens per start. Run the one-shot migration:
+
+```bash
+cd ~/.claude/universal-kit && git pull
+~/.claude/universal-kit/migrate.sh
+```
+
+Then restart Claude Code. ECC moves to `~/ecc-disabled`, the index regenerates clean.
+
+---
+
 ## Install
 
 ### New machine (recommended)
@@ -92,7 +105,7 @@ chmod +x ~/.claude/universal-kit/*.sh
 ~/.claude/universal-kit/bootstrap.sh
 ```
 
-`bootstrap.sh` clones the four source libraries, symlinks the agents and
+`bootstrap.sh` clones the three source libraries, symlinks the agents and
 skills into `~/.claude/`, installs the slash commands, and regenerates
 `AGENT_INDEX.md` with this machine's paths. Restart Claude Code afterwards so
 the commands register.

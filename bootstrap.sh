@@ -21,8 +21,9 @@ clone() {
 }
 clone https://github.com/anthropics/skills.git            anthropic-skills-repo
 clone https://github.com/wshobson/agents.git               wshobson-agents
-clone https://github.com/affaan-m/ecc.git                  ecc
 clone https://github.com/hesreallyhim/awesome-claude-code.git awesome-claude-code
+# NOTE: ECC (affaan-m/ecc) is intentionally excluded. It loaded ~200 skill descriptions
+# into every session context. Individual skills are curated into kit/skills/ instead.
 
 echo "==> 2/4 Installing kit agents + skills (symlinks)"
 for f in "$KIT"/agents/*.md; do
@@ -44,5 +45,7 @@ echo "  - $(ls "$KIT"/agents/*.md | wc -l | tr -d ' ') agents -> ~/.claude/agent
 echo "  - $(ls -d "$KIT"/skills/*/ | wc -l | tr -d ' ') skills -> ~/.claude/skills/"
 echo "  - $(ls "$KIT"/commands/*.md | wc -l | tr -d ' ') commands: /onboard /task /build /genesis /rootcause /ship"
 echo ""
-echo "Restart Claude Code to pick up the commands. Optional plugins to add"
-echo "manually via /plugin: anthropic-skills marketplace, ECC."
+echo "Restart Claude Code to pick up the commands."
+echo ""
+echo "Already installed on this machine before? Run migrate.sh to clean up ECC:"
+echo "  ~/.claude/universal-kit/migrate.sh"

@@ -18,13 +18,6 @@ echo ""
 echo "## Specialist agents (wshobson library, deduped)"
 awk -F'|' '{printf "- **%s** — %s → `%s`\n", $1, $2, $3}' "$TMP"
 echo ""
-echo "## ECC skills"
-for d in "$HOME"/.claude/skills/ecc/.agents/skills/*/; do
-  name=$(basename "$d")
-  desc=$(awk '/^description:/{sub(/^description: */,""); gsub(/"/,""); print; exit}' "$d/SKILL.md" 2>/dev/null | cut -c1-150)
-  echo "- **$name** — $desc → \`${d}SKILL.md\`"
-done
-echo ""
 echo "## Anthropic official skills"
 for d in "$HOME"/.claude/skills/anthropic-skills-repo/skills/*/; do
   name=$(basename "$d")
