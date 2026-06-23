@@ -19,6 +19,7 @@ unless I ask. If reality contradicts the map, update the map.
 - Performance concern → use `performance-engineer`
 - PHP/WordPress → use `php-pro`
 - Testing required → use `test-automator` to write tests alongside the change
+- Blog posts, LinkedIn, Twitter/X, newsletters, carousels, brand copy → use `content-marketing` skill (research → draft → repurpose → checklist pipeline)
 
 For small single-file changes work inline. For anything touching 3+ files or
 needing visual verification, spawn the relevant specialist as a subagent.
