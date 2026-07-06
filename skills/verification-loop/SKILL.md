@@ -1,92 +1,24 @@
 ---
 name: verification-loop
-description: "A comprehensive verification system for Claude Code sessions."
+description: Run before declaring any code change done, before creating a PR, or after a refactor — execute build, type-check, lint, tests, and a diff review, and back every "it works" claim with command output as evidence.
 ---
 
-# Verification Loop Skill
+# Verification Loop
 
-A comprehensive verification system for Claude Code sessions.
+No change is "done" until verified with evidence. Run the project's real gates and report actual output — never claim a pass you didn't observe.
 
-## When to Use
+## Gates (in order)
 
-Invoke this skill:
-- After completing a feature or significant code change
-- Before creating a PR
-- When you want to ensure quality gates pass
-- After refactoring
+1. **Build** — must compile. If it fails, stop and fix before anything else.
+2. **Types** — `tsc --noEmit` / `pyright`. Fix critical errors before continuing.
+3. **Lint** — project's linter (`npm run lint`, `ruff check`).
+4. **Tests** — with coverage. Target: 80% minimum.
+5. **Security scan** — grep the diff for leaked secrets (`sk-`, `api_key`) and stray `console.log` in src.
+6. **Diff review** — `git diff --stat`; check each changed file for unintended changes, missing error handling, edge cases.
 
-## Verification Phases
+Use the project's actual commands (check package.json scripts / Makefile) rather than guessing.
 
-### Phase 1: Build Verification
-```bash
-# Check if project builds
-npm run build 2>&1 | tail -20
-# OR
-pnpm build 2>&1 | tail -20
-```
-
-If build fails, STOP and fix before continuing.
-
-### Phase 2: Type Check
-```bash
-# TypeScript projects
-npx tsc --noEmit 2>&1 | head -30
-
-# Python projects
-pyright . 2>&1 | head -30
-```
-
-Report all type errors. Fix critical ones before continuing.
-
-### Phase 3: Lint Check
-```bash
-# JavaScript/TypeScript
-npm run lint 2>&1 | head -30
-
-# Python
-ruff check . 2>&1 | head -30
-```
-
-### Phase 4: Test Suite
-```bash
-# Run tests with coverage
-npm run test -- --coverage 2>&1 | tail -50
-
-# Check coverage threshold
-# Target: 80% minimum
-```
-
-Report:
-- Total tests: X
-- Passed: X
-- Failed: X
-- Coverage: X%
-
-### Phase 5: Security Scan
-```bash
-# Check for secrets
-grep -rn "sk-" --include="*.ts" --include="*.js" . 2>/dev/null | head -10
-grep -rn "api_key" --include="*.ts" --include="*.js" . 2>/dev/null | head -10
-
-# Check for console.log
-grep -rn "console.log" --include="*.ts" --include="*.tsx" src/ 2>/dev/null | head -10
-```
-
-### Phase 6: Diff Review
-```bash
-# Show what changed
-git diff --stat
-git diff HEAD~1 --name-only
-```
-
-Review each changed file for:
-- Unintended changes
-- Missing error handling
-- Potential edge cases
-
-## Output Format
-
-After running all phases, produce a verification report:
+## Report Format
 
 ```
 VERIFICATION REPORT
@@ -103,23 +35,8 @@ Overall:   [READY/NOT READY] for PR
 
 Issues to Fix:
 1. ...
-2. ...
 ```
 
 ## Continuous Mode
 
-For long sessions, run verification every 15 minutes or after major changes:
-
-```markdown
-Set a mental checkpoint:
-- After completing each function
-- After finishing a component
-- Before moving to next task
-
-Run: /verify
-```
-
-## Integration with Hooks
-
-This skill complements PostToolUse hooks but provides deeper verification.
-Hooks catch issues immediately; this skill provides comprehensive review.
+In long sessions, re-verify at checkpoints — after each completed function/component, before moving to the next task — rather than once at the end. PostToolUse hooks catch issues instantly; this skill is the deeper, full-suite pass.

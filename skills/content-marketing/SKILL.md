@@ -1,38 +1,18 @@
 ---
 name: content-marketing
-description: Full content marketing pipeline — research trending angles, draft platform-specific copy, repurpose across channels, and publish. Covers blogs, LinkedIn, Twitter/X, newsletters, and social carousels.
+description: Content marketing pipeline — research trending angles, draft platform-specific copy (blog, LinkedIn, Twitter/X, newsletter, carousel), repurpose long-form across channels, and pre-publish review. Use for any marketing content drafting or multi-platform repurposing request.
 ---
 
-# Content Marketing Skill
+# Content Marketing
 
-A modular pipeline: research → draft → repurpose → (publish). Each stage is discrete so you get clean handoffs and consistent quality across platforms.
-
----
+Pipeline: research → draft → repurpose → review. Discrete stages, clean handoffs.
 
 ## Stage 1 — Trend Research
 
-Goal: find 3–5 angles on a topic that are currently resonating.
+Find 3–5 angles with evidence of current traction (search volume, recent coverage, engagement). Skip sources older than 90 days. Deliver: one-line hook per angle, a ranked recommendation with reason, structured (JSON) so drafting can consume it. **Approval gate: confirm the chosen angle with the user before drafting; run the rest autonomously.**
 
-```
-Research trending angles on: [TOPIC]
+## Stage 2 — Platform Format Profiles (enforce strictly)
 
-Return a structured brief with:
-- 3–5 subtopics with evidence of traction (search volume, recent coverage, engagement signals)
-- One-line hook for each angle
-- Freshness flag — skip sources older than 90 days
-- Recommended angle ranked #1 with reason
-
-Format: JSON so the next stage can consume it directly.
-Output: research_brief.json
-```
-
----
-
-## Stage 2 — Platform-Specific Drafting
-
-Goal: produce copy matched exactly to each platform's format and the brand's voice.
-
-**Format profiles (enforce strictly):**
 | Platform | Length | Tone | Structure |
 |---|---|---|---|
 | Blog post | 1,500–2,500 words | Educational, authoritative | H2/H3 headers, 1 CTA |
@@ -42,122 +22,49 @@ Goal: produce copy matched exactly to each platform's format and the brand's voi
 | Newsletter | 400–700 words | Warm, direct | Greeting, 3 sections, sign-off |
 | Social carousel | 5–7 slides, 1 idea per slide | Bold, scannable | Headline + 2-line body per slide |
 
-```
-Draft [FORMAT] on this angle: [ANGLE FROM RESEARCH BRIEF]
+Every draft needs: brand voice loaded before writing, a defined audience and goal (inform / convert / nurture / build authority), hard adherence to the length limits, and one specific CTA matched to the goal.
 
-Brand voice: [PASTE BRAND VOICE DESCRIPTION OR "professional and clear"]
-Audience: [WHO IS READING THIS]
-Goal: [inform / convert / nurture / build authority]
+## Stage 3 — Repurposing (two-pass, never one-shot)
 
-Follow the format profile for [FORMAT] exactly — length, structure, tone.
-Load brand voice before writing. Do not exceed the word/character limits.
-End with a specific CTA relevant to the goal.
-```
+One-shot repurposing degrades quality. Always split:
 
----
-
-## Stage 3 — Repurposing Pipeline
-
-Goal: extract maximum content from one long-form piece across all platforms.
-
-Two-pass approach (do NOT do this in one shot — quality degrades):
-
-**Pass 1 — Extract:**
-```
-Analyze this content and extract:
+**Pass 1 — Extract** from the long-form piece, as structured JSON:
 1. Core argument (1 sentence)
 2. Top 5 data points or statistics
 3. 3–5 quotable sentences (standalone, punchy)
 4. 5–7 actionable tips (imperative form)
 5. 3 engagement questions for social
 
-CONTENT: [PASTE BLOG POST OR ARTICLE]
+**Pass 2 — Generate** each target format from the extracted elements, applying the Stage 2 profiles. Keep the core argument identical across formats; vary the hook per platform — same idea, different entry point.
 
-Return as structured JSON.
-```
+## Stage 4 — Pre-Publish Review
 
-**Pass 2 — Generate per platform:**
-```
-Using these extracted elements: [PASTE PASS 1 OUTPUT]
+Verdict is APPROVED or a list of specific fixes (never vague feedback). Check:
+1. Brand voice — flag any off-tone sentences
+2. Facts — flag claims needing a source
+3. CTA — one clear, specific action
+4. Platform fit — matches the format profile (length, structure)
+5. Hook — would someone stop scrolling for the first line?
 
-Generate all of the following (run each through the drafting skill format profiles):
-- LinkedIn post
-- Twitter/X thread (8 tweets)
-- Newsletter section (400 words)
-- 6-slide carousel outline
+## Brand Voice Block
 
-Keep the core argument consistent across all formats.
-Vary the hook for each platform — same idea, different entry point.
-```
-
----
-
-## Stage 4 — Pre-Publish Checklist
-
-Before any content goes out, verify:
-
-```
-Review this [FORMAT] before publishing:
-
-1. Brand voice — does it sound like us? Flag any off-tone sentences.
-2. Facts — are all claims accurate? Flag anything that needs a source.
-3. CTA — is there one clear action? Is it specific?
-4. Platform fit — does it match the format profile (length, structure)?
-5. Hook — would someone stop scrolling for this first line?
-
-CONTENT: [PASTE DRAFT]
-
-Return: APPROVED or a list of specific fixes needed (not vague feedback).
-```
-
----
-
-## Orchestrator — Full Pipeline
-
-Run all stages in sequence for a single topic:
-
-```
-Run the full content marketing pipeline for: [TOPIC]
-
-Step 1: Research 3–5 trending angles. Pick the best one.
-Step 2: Draft a 1,500-word blog post on the chosen angle.
-Step 3: Repurpose into LinkedIn post, Twitter thread, newsletter section, carousel outline.
-Step 4: Run pre-publish checklist on each piece.
-
-Brand voice: [DESCRIPTION]
-Audience: [TARGET READER]
-Goal: [inform / convert / nurture]
-
-Approval gate: after Step 1, show me the chosen angle and wait for confirmation before drafting. After that, run Steps 2–4 autonomously.
-
-Deliver: all pieces in separate clearly labelled sections.
-```
-
----
-
-## Brand Voice Setup
-
-Store once, reference everywhere:
+Capture once, paste at the top of every drafting prompt:
 
 ```
 BRAND VOICE CONFIGURATION
 
 Tone: [e.g. direct, warm, no-fluff, expert but approachable]
-We sound like: [describe in 2 sentences]
-We never say: [list 3–5 phrases or patterns to avoid]
-Reference content: [paste 2–3 examples of on-brand copy]
+We sound like: [2 sentences]
+We never say: [3–5 phrases or patterns to avoid]
+Reference content: [2–3 examples of on-brand copy]
 Audience: [who reads this, their job, their pain point]
 CTA style: [e.g. "soft nudge" vs "direct ask"]
 ```
 
-Paste this block at the start of any drafting prompt.
-
----
-
-## Common Mistakes to Avoid
+## Failure Modes
 
 - Generic prompts → always include brand voice + format profile
-- One-shot repurposing → always use the two-pass extraction method
-- Publishing without review → always run the pre-publish checklist
-- Same hook across platforms → vary the entry point per platform
-- Skipping the approval gate → always confirm the angle before drafting
+- One-shot repurposing → always two-pass
+- Publishing without the Stage 4 review
+- Same hook reused across platforms
+- Skipping the angle approval gate
