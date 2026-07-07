@@ -13,6 +13,11 @@ On T2/T3: if the change is not describable in one sentence, load
 `planned-execution` and produce `plan.md` before editing any file. On T1:
 state goal, constraints, and per-change verification, then act.
 
+If the task says "plan only": produce `plan.md` (per `planned-execution`
+Phase 1–2, on any tier), present it, and stop — this is the
+frontier-sandwich handoff; I may switch the session to a cheaper model
+before saying continue. "Continue executing plan.md" resumes at Phase 4.
+
 Do the task below to mergeable quality, following the project's conventions.
 Constraints: minimal diff; ask before adding dependencies; don't commit
 unless I ask. If reality contradicts the map, update the map.
