@@ -15,6 +15,20 @@ done | awk -F'|' '!seen[$1]++' | sort > "$TMP"
 echo "# Agent & Skill Library Index"
 echo "_One line per resource. Orchestrator: pick by description, then Read the path for the full definition._"
 echo ""
+echo "## Kit agents (installed — spawn directly by name)"
+for f in "$K"/agents/*.md; do
+  name=$(basename "$f" .md)
+  desc=$(awk '/^description:/{sub(/^description: */,""); print; exit}' "$f" | cut -c1-150)
+  echo "- **$name** — $desc → \`$f\`"
+done
+echo ""
+echo "## Kit skills (installed — load by name)"
+for d in "$K"/skills/*/; do
+  name=$(basename "$d")
+  desc=$(awk '/^description:/{sub(/^description: */,""); print; exit}' "$d/SKILL.md" 2>/dev/null | cut -c1-150)
+  echo "- **$name** — $desc → \`${d}SKILL.md\`"
+done
+echo ""
 echo "## Specialist agents (wshobson library, deduped)"
 awk -F'|' '{printf "- **%s** — %s → `%s`\n", $1, $2, $3}' "$TMP"
 echo ""

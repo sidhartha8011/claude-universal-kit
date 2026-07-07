@@ -1,5 +1,5 @@
 ---
-name: backend-development-test-automator
+name: test-automator
 description: Create comprehensive test suites including unit, integration, and E2E tests. Supports TDD/BDD workflows. Use for test creation during feature development.
 model: sonnet
 ---

@@ -6,6 +6,9 @@ argument-hint: <what you want to build>
 Goal: take the idea below from zero to a working, verified MVP in this
 directory.
 
+Step 0: load the `model-adaptation` skill and apply its universal invariants
+and tier rules for the whole build.
+
 **Phase 1 — Architecture gate (one approval, then autonomous)**
 Before scaffolding, present a requirements brief — MVP vs deferred, stack
 with one-line reasons, data model sketch, milestone plan — and ask any

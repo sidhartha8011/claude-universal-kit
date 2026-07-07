@@ -5,6 +5,11 @@ argument-hint: <what you want built>
 
 Goal: ship the requirement below, verified end-to-end, at minimum token cost.
 
+Step 0: load `model-adaptation`; route each specialist per its tier rules, and
+pin review/verification roles (`spec-verifier`, `security-auditor`) to the
+strongest model alias available (`opus` by default), regardless of the
+session model.
+
 Context: read `.claude/CODEBASE_MAP.md` if present. Your specialist roster
 is `~/.claude/universal-kit/AGENT_INDEX.md` — one line per agent/skill with
 the path to its full definition.
