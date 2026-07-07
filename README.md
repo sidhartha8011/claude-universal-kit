@@ -138,6 +138,26 @@ warm start, not a cold one.
 
 ---
 
+## The model-boost layer
+
+Running the kit on Opus or Sonnet instead of a frontier model? Three skills +
+one agent close most of the gap — research-backed scaffolding (Reflexion,
+CRITIC, plan-externalization, best-of-N) that weaker tiers need and frontier
+tiers must NOT get:
+
+| Piece | What it does |
+|---|---|
+| `model-adaptation` | Tier router: detects the running model (T1 Fable-class / T2 Opus 4.7–4.8 + Sonnet 5 / T3 older) and states which scaffolds to load — and which to strip |
+| `planned-execution` | Explore → externalized `plan.md` with per-step verification → confirm → implement. Skips itself for one-sentence diffs |
+| `grounded-loops` | Retries must cite external evidence (test output, traces) — never ungrounded self-review. 3-iteration caps, then strategy switch |
+| `spec-verifier` agent | Fresh-context, read-only reviewer pinned to the strongest model; sole authority to approve mandated plan steps |
+
+`/task`, `/build`, and `/genesis` load the router automatically at Step 0 —
+on a frontier model the scaffolds stand down, so you never pay their
+overhead where they aren't earning.
+
+---
+
 ## How `/build` stays cheap
 
 The orchestrator never loads all 175+ specialists. It reads `AGENT_INDEX.md`
