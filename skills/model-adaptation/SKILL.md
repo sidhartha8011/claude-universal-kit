@@ -50,6 +50,26 @@ Detection: read the model name from the system prompt/environment. If unsure, as
 **Long tasks (compaction-capable harnesses)**
 - "Your context window is compacted automatically as it approaches its limit. Do not stop tasks early due to token budget concerns."
 
+## The frontier sandwich (routing, not scaffolding)
+
+For big tasks on a budget, route by phase — deep reasoning concentrates in
+planning and review, not execution:
+
+1. **Plan on the strongest model** (~10% of tokens): run /task or /build on
+   Fable/Opus until `plan.md` is written and confirmed. The plan turns the
+   task into steps small enough that a T2 model executes each at its ceiling.
+2. **Execute on Sonnet** (~80%): switch the session model (`/model`); the
+   plan file carries the intelligence across the switch. Follow
+   `planned-execution` Phase 4 — one step at a time, verify each.
+3. **Verify on the strongest model** (~10%): `spec-verifier` is already
+   pinned to the strongest alias; dispatch it at the done gate as usual.
+
+Switch points: after plan confirmation (strongest → Sonnet), and only switch
+back if execution hits the `grounded-loops` escalation ladder step 4.
+Expected economics: ~90% of frontier quality at ~30% of the cost on
+multi-step tasks. Skip the sandwich for small tasks — the model switch
+overhead isn't worth it under ~5 plan steps.
+
 ## De-prescription rule
 
 On every model upgrade, re-run a representative task with the lower-tier layer removed and keep whichever output is better. Prune any static instruction that fails the test: *would removing it cause mistakes?*
