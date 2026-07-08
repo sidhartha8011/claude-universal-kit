@@ -8,7 +8,9 @@ codebase without re-exploring it.
 If the map exists and is under 7 days old, read it, confirm it still matches
 the codebase, and report ready.
 
-Otherwise explore the codebase and write the map using
+Otherwise explore via read-only subagents (parallel, one per area) so raw
+file contents stay out of this context — the map is the only artifact that
+matters. Write it using
 `~/.claude/universal-kit/templates/CODEBASE_MAP.md.template` — fill what
 exists, omit what doesn't. Record every external surface (routes, handlers,
 jobs, pages) with file:line and required auth — that table is what future

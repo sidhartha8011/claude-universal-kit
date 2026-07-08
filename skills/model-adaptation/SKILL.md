@@ -25,6 +25,16 @@ Detection: read the model name from the system prompt/environment. If unsure, as
 - **Anti-overengineering**: Only make changes that are directly requested or clearly necessary. A bug fix doesn't need surrounding code cleaned up. Only validate at system boundaries. Don't create helpers or abstractions for one-time operations.
 - **Parallel tool calls**: When multiple independent reads/searches are needed, issue them in one batch, not sequentially.
 
+## Token discipline (all tiers — the lowest-cost path to the same result)
+
+- **Map, not codebase**: answer from `.claude/CODEBASE_MAP.md` first; open source files only for the parts you're changing. Read excerpts (offset/limit), not whole files.
+- **Delegate reading-heavy exploration** to a subagent (Explore-type) — conclusions come back, raw file contents never enter the main context.
+- **Library APIs: resolve, don't guess** — append "use context7" for any unfamiliar/current API (WP hooks, Next.js, package signatures). One doc lookup is cheaper than one wrong-signature retry loop.
+- **Never re-read what you just wrote or edited** — the edit result already confirms it. Never re-verify what's already evidenced this session.
+- **CLI over MCP when both exist** (`gh`, `git`, `psql`): zero tool-definition overhead.
+- **Lean replies**: don't restate diffs, don't summarize unchanged plans, don't narrate tool calls. Findings and decisions only.
+- **Retries are bounded**: on failure, `grounded-loops` — quoted evidence, 3-attempt cap, then switch strategy. Flailing is the single biggest token sink.
+
 ## Tier-conditional snippets
 
 **Planning**
