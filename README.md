@@ -169,6 +169,16 @@ only when it's actually used.
 
 ---
 
+## The efficiency stack
+
+Five measured, lean add-ons around the kit — ccusage (measure first),
+Context7 (docs on demand), official LSP plugins, Chrome DevTools MCP
+(project-scope), native /loop + Routines — plus a watch list and a skip
+list of hyped tools that don't earn their context cost. Install commands
+and the daily loop: [EFFICIENCY_STACK.md](EFFICIENCY_STACK.md).
+
+---
+
 ## Keeping machines in sync
 
 ```bash
