@@ -20,6 +20,14 @@ other roster entry, Read its definition file and inject it into a
 general-purpose agent with a self-contained brief. Give each subagent only
 the context it needs; you integrate the results.
 
+Every brief that edits files follows the worker brief contract
+(`model-adaptation`): file allowlist, constraints to echo, full-diff
+return, runnable acceptance check. Route worker models per step —
+mechanical/scoped → `sonnet`; multi-file coherence → session model;
+review/verification → strongest (per Step 0). Verify each delegated
+result against its check before integrating; a brief that fails twice,
+execute yourself.
+
 If something is ambiguous enough to change the architecture, ask me once,
 up front. Don't commit unless I ask. When done, report what was built, who
 did what, and the verification proof; append a short entry to
