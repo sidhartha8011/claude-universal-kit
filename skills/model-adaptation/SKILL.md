@@ -80,6 +80,28 @@ Expected economics: ~90% of frontier quality at ~30% of the cost on
 multi-step tasks. Skip the sandwich for small tasks — the model switch
 overhead isn't worth it under ~5 plan steps.
 
+## Worker mode (inverted sandwich) — when Sonnet-as-driver struggles
+
+Sonnet holding a whole multi-step task drifts: dropped constraints, wrong
+files, shallow fixes. If execution shows 2+ spec-verifier rejections, 2+
+grounded-loops escalations, or visible quality problems — invert:
+
+1. Session runs on the **strongest model** (it holds `plan.md` and all
+   judgment).
+2. For each mechanical step, the driver writes a **self-contained brief** —
+   exact files, exact change intent, acceptance check, all needed context
+   inline (the worker reads nothing else) — and dispatches it to a
+   **`sonnet` subagent** via the Agent tool.
+3. The driver verifies each result against the step's check before
+   dispatching the next. Any brief that fails twice, the driver executes
+   itself.
+
+Same economics as the sandwich (cheap tokens still do the labor) but the
+weak model never holds the task — only a brief it cannot drift from.
+Default routing: Sonnet = scoped briefs and single-file mechanical work,
+never whole features. Opus 4.8 = execution tier when steps need multi-file
+coherence. Frontier = planning, review, and anything subtle.
+
 ## De-prescription rule
 
 On every model upgrade, re-run a representative task with the lower-tier layer removed and keep whichever output is better. Prune any static instruction that fails the test: *would removing it cause mistakes?*

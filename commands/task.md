@@ -37,7 +37,9 @@ For small single-file changes work inline. For anything touching 3+ files or
 needing visual verification, spawn the relevant specialist as a subagent.
 
 If any check fails, load `grounded-loops` before retrying — no ungrounded
-second attempts.
+second attempts. If execution on a T2 model accumulates 2+ verifier
+rejections or escalations, stop and recommend worker mode
+(`model-adaptation` → inverted sandwich) instead of grinding.
 
 Done gate (multi-step tasks, T2/T3; on T1 only for high-stakes changes): the
 task is not done when the implementer says so. Dispatch the `spec-verifier`
