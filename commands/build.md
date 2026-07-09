@@ -23,8 +23,9 @@ the context it needs; you integrate the results.
 Every brief that edits files follows the worker brief contract
 (`model-adaptation`): file allowlist, constraints to echo, full-diff
 return, runnable acceptance check. Route worker models per step —
-mechanical/scoped → `sonnet`; multi-file coherence → session model;
-review/verification → strongest (per Step 0). Verify each delegated
+mechanical/scoped → `sonnet`; multi-file coherence → `opus` worker;
+review/verification → strongest (per Step 0). The orchestrator edits
+files itself only after a delegated brief fails twice. Verify each delegated
 result against its check before integrating; a brief that fails twice,
 execute yourself.
 

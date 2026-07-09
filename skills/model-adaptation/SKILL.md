@@ -98,9 +98,14 @@ grounded-loops escalations, or visible quality problems — invert:
 
 Same economics as the sandwich (cheap tokens still do the labor) but the
 weak model never holds the task — only a brief it cannot drift from.
-Default routing: Sonnet = scoped briefs and single-file mechanical work,
-never whole features. Opus 4.8 = execution tier when steps need multi-file
-coherence. Frontier = planning, review, and anything subtle.
+
+**Routing is a plan-time decision, not an in-flight choice.** Every step
+carries a `route:` (sonnet | opus | driver) in `plan.md`, approved at the
+confirmation gate. Sonnet = scoped single-file mechanical work. Opus
+worker = multi-file coherence, careful edits. Driver = genuine judgment
+only, justified per step, ≤~20% of steps — a driver that "just does it
+itself" is the failure mode: frontier tokens doing labor a worker handles.
+Failure reroutes upward (sonnet → opus → driver), never silently.
 
 **Worker brief contract** — every brief includes these four guards, and the
 driver rejects any result that violates one:

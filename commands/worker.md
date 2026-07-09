@@ -1,5 +1,5 @@
 ---
-description: Worker-mode task — strong model drives, Sonnet subagents execute armored briefs
+description: Worker-mode task — strong model drives, delegates labor to opus/sonnet workers by plan-time routing
 argument-hint: <task description>
 ---
 
@@ -11,18 +11,27 @@ Read `.claude/CODEBASE_MAP.md`, the project CLAUDE.md, and recent
 `.claude/SESSION_LOG.md` entries. If there is no map, tell me to run
 /onboard and stop.
 
-Plan per `planned-execution`: write `plan.md`, present it, wait for my
-confirmation.
+Plan per `planned-execution`, and **route every step at plan time** — each
+step in `plan.md` gets a `route:` field:
 
-Then execute in worker mode (`model-adaptation` → inverted sandwich):
-you are the driver — you hold `plan.md` and all judgment, and you never
-delegate planning, review, or debugging. For each mechanical step,
-dispatch a `sonnet` subagent with a self-contained brief following the
-**worker brief contract**: file allowlist, constraints to echo, full-diff
-return, runnable acceptance check with verbatim output. Verify each result
-against its check before dispatching the next; reject any guard violation.
-A brief that fails twice, execute yourself. Steps needing multi-file
-coherence or judgment: execute yourself, don't delegate.
+- `sonnet` — scoped, mechanical, single-file (the default)
+- `opus` — multi-file coherence or careful edits (an opus WORKER, not you)
+- `driver` — only for genuine judgment calls, and each needs a one-line
+  justification in the plan
+
+Hard budget: at most ~20% of steps route to `driver`. If more, the
+decomposition is too coarse — split steps until they're delegable. Present
+`plan.md` with the routing column; I approve the split before any edit.
+
+Execute as the driver: you hold `plan.md` and all judgment; you never
+delegate planning, review, or debugging. Dispatch each step to its routed
+worker (Agent tool, `model:` per route) with a self-contained brief under
+the **worker brief contract**: file allowlist, constraints to echo,
+full-diff return, runnable acceptance check with verbatim output. Verify
+each result against its check before the next; reject guard violations.
+Reroute on failure: sonnet fails twice → re-dispatch to opus; opus fails
+twice → driver executes. Never quietly take over a step that hasn't
+failed — mid-flight route changes go through an updated plan.md.
 
 If any check fails, retry per `grounded-loops` — max 3, evidence-quoted.
 Done gate: dispatch `spec-verifier` with `plan.md` and the full diff;
@@ -30,7 +39,7 @@ address P0/P1 findings, max 3 rounds, then surface what remains.
 
 Constraints: minimal diff; ask before adding dependencies; don't commit
 unless I ask. Report per the evidence-grounded-progress invariant: what
-changed, which steps were delegated vs done by you, verification proof.
-Append a short entry to `.claude/SESSION_LOG.md`.
+changed, the actual routing split (planned vs executed, with any reroutes),
+and verification proof. Append a short entry to `.claude/SESSION_LOG.md`.
 
 TASK: $ARGUMENTS
