@@ -102,6 +102,22 @@ Default routing: Sonnet = scoped briefs and single-file mechanical work,
 never whole features. Opus 4.8 = execution tier when steps need multi-file
 coherence. Frontier = planning, review, and anything subtle.
 
+**Worker brief contract** — every brief includes these four guards, and the
+driver rejects any result that violates one:
+
+1. **File allowlist** (vs wrong files): the exact paths the worker may
+   touch. If the change seems to need any other file, return
+   `BLOCKED: needs <file>` — never improvise.
+2. **Constraint echo** (vs ignored constraints): the brief's constraints
+   listed at the end; the worker restates each with how the result
+   satisfies it. Missing echo = automatic reject.
+3. **Diff scope** (vs collateral damage): worker returns the full diff;
+   any hunk outside the allowlist = reject. No reformatting, no
+   drive-by refactors, no "improvements".
+4. **Runnable acceptance check** (vs false "done"): the brief includes the
+   exact command; the worker returns its verbatim output. A completion
+   claim without command output is not done.
+
 ## De-prescription rule
 
 On every model upgrade, re-run a representative task with the lower-tier layer removed and keep whichever output is better. Prune any static instruction that fails the test: *would removing it cause mistakes?*
