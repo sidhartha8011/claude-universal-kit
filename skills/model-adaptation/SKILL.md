@@ -118,7 +118,9 @@ driver rejects any result that violates one:
    satisfies it. Missing echo = automatic reject.
 3. **Diff scope** (vs collateral damage): worker returns the full diff;
    any hunk outside the allowlist = reject. No reformatting, no
-   drive-by refactors, no "improvements".
+   drive-by refactors, no "improvements". No narration comments — a
+   comment survives only if it states a constraint the code can't show
+   (why, never what); comments describing the change itself = reject.
 4. **Runnable acceptance check** (vs false "done"): the brief includes the
    exact command; the worker returns its verbatim output. A completion
    claim without command output is not done.
