@@ -22,6 +22,12 @@ clone() {
 clone https://github.com/anthropics/skills.git            anthropic-skills-repo
 clone https://github.com/wshobson/agents.git               wshobson-agents
 clone https://github.com/hesreallyhim/awesome-claude-code.git awesome-claude-code
+# Frontend animation / 3D skill sources
+clone https://github.com/greensock/gsap-skills.git         gsap-skills-repo
+clone https://github.com/CloudAI-X/threejs-skills.git      threejs-skills-repo
+clone https://github.com/GoogleChrome/modern-web-guidance.git chrome-web-repo
+clone https://github.com/199-biotechnologies/motion-dev-animations-skill.git motion-dev-repo
+clone https://github.com/MiniMax-AI/skills.git             minimax-skills-repo
 # NOTE: ECC (affaan-m/ecc) is intentionally excluded. It loaded ~200 skill descriptions
 # into every session context. Individual skills are curated into kit/skills/ instead.
 
@@ -32,6 +38,13 @@ done
 for d in "$KIT"/skills/*/; do
   ln -sfn "${d%/}" "$SKILLS_DIR/$(basename "$d")"
 done
+# Frontend animation / 3D skills from source clones
+for d in "$SKILLS_DIR"/gsap-skills-repo/skills/*/ "$SKILLS_DIR"/threejs-skills-repo/skills/*/; do
+  ln -sfn "${d%/}" "$SKILLS_DIR/$(basename "$d")"
+done
+ln -sfn "$SKILLS_DIR/chrome-web-repo/skills/modern-web-guidance" "$SKILLS_DIR/modern-web-guidance"
+ln -sfn "$SKILLS_DIR/motion-dev-repo" "$SKILLS_DIR/motion-dev-animations"
+ln -sfn "$SKILLS_DIR/minimax-skills-repo/skills/shader-dev" "$SKILLS_DIR/shader-dev"
 
 echo "==> 3/4 Installing slash commands"
 cp "$KIT"/commands/*.md "$CLAUDE_DIR/commands/"

@@ -26,6 +26,8 @@ unless I ask. If reality contradicts the map, update the map.
 - Frontend / UI / components → use `frontend-developer` + `ui-visual-validator` to build and visually verify
 - Styling, UX, design quality → apply `taste-skill` (anti-generic design taste) + `ui-ux-pro-max`; polish pass with `baseline-ui`
 - Accessibility or animation-heavy UI → `fixing-accessibility` / `fixing-motion-performance` before done
+- Animation authoring → `motion-dev-animations` (React/Motion), `gsap-*` skills (timelines, ScrollTrigger), `modern-web-guidance` (view transitions, scroll-driven CSS)
+- 3D / WebGL → `threejs-*` skills (fundamentals through postprocessing); shaders/generative → `shader-dev`
 - New feature with non-trivial architecture → consult `architect-review` before writing code
 - Auth, payments, user data, file uploads, or any external input → run `security-auditor` alongside
 - Database schema or query work → use `sql-pro`
