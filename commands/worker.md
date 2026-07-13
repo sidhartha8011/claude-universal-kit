@@ -27,7 +27,10 @@ Execute as the driver: you hold `plan.md` and all judgment; you never
 delegate planning, review, or debugging. Dispatch each step to its routed
 worker (Agent tool, `model:` per route) with a self-contained brief under
 the **worker brief contract**: file allowlist, constraints to echo,
-full-diff return, runnable acceptance check with verbatim output. Verify
+full-diff return, runnable acceptance check with verbatim output. Briefs
+name the specialist skills the worker must load (e.g. `taste-skill` +
+`gsap-scrolltrigger` for an animated section; `threejs-*` for 3D) — a
+worker doesn't know the roster, the brief tells it. Verify
 each result against its check before the next; reject guard violations.
 Reroute on failure: sonnet fails twice → re-dispatch to opus; opus fails
 twice → driver executes. Never quietly take over a step that hasn't

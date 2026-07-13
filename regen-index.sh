@@ -29,6 +29,14 @@ for d in "$K"/skills/*/; do
   echo "- **$name** — $desc → \`${d}SKILL.md\`"
 done
 echo ""
+echo "## Frontend animation / 3D skills (installed — load by name)"
+for d in "$HOME"/.claude/skills/gsap-skills-repo/skills/*/ "$HOME"/.claude/skills/threejs-skills-repo/skills/*/ "$HOME"/.claude/skills/chrome-web-repo/skills/modern-web-guidance/ "$HOME"/.claude/skills/motion-dev-repo/ "$HOME"/.claude/skills/minimax-skills-repo/skills/shader-dev/; do
+  [ -f "$d/SKILL.md" ] || continue
+  name=$(awk '/^name:/{print $2; exit}' "$d/SKILL.md")
+  desc=$(awk '/^description:/{sub(/^description: */,""); print; exit}' "$d/SKILL.md" | cut -c1-150)
+  echo "- **$name** — $desc → \`${d}SKILL.md\`"
+done
+echo ""
 echo "## Specialist agents (wshobson library, deduped)"
 awk -F'|' '{printf "- **%s** — %s → `%s`\n", $1, $2, $3}' "$TMP"
 echo ""

@@ -29,7 +29,8 @@ Each milestone must run end-to-end before the next starts. Use the right
 specialist for each layer of work:
 
 - Backend / API design → `backend-architect` + `api-design` skill
-- Frontend / UI → `frontend-developer` + `ui-ux-pro-max` skill for every screen
+- Frontend / UI → `frontend-developer` + `taste-skill` + `ui-ux-pro-max` for every screen; `baseline-ui` polish pass
+- Animation / 3D → `motion-dev-animations` or `gsap-*` skills; `threejs-*` / `shader-dev` for WebGL; `modern-web-guidance` for view transitions and scroll-driven CSS
 - Visual quality check → `ui-visual-validator` after each UI milestone
 - Auth, payments, user input, file handling → `security-auditor` reviews before milestone closes
 - Database schema → `sql-pro`
