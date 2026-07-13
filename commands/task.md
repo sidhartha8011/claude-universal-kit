@@ -24,7 +24,8 @@ unless I ask. If reality contradicts the map, update the map.
 
 **Specialist selection — activate the right expert for the work:**
 - Frontend / UI / components → use `frontend-developer` + `ui-visual-validator` to build and visually verify
-- Styling, UX, design quality → also apply `ui-ux-pro-max` for layout and interaction patterns
+- Styling, UX, design quality → apply `taste-skill` (anti-generic design taste) + `ui-ux-pro-max`; polish pass with `baseline-ui`
+- Accessibility or animation-heavy UI → `fixing-accessibility` / `fixing-motion-performance` before done
 - New feature with non-trivial architecture → consult `architect-review` before writing code
 - Auth, payments, user data, file uploads, or any external input → run `security-auditor` alongside
 - Database schema or query work → use `sql-pro`
