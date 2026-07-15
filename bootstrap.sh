@@ -49,14 +49,26 @@ ln -sfn "$SKILLS_DIR/minimax-skills-repo/skills/shader-dev" "$SKILLS_DIR/shader-
 echo "==> 3/4 Installing slash commands"
 cp "$KIT"/commands/*.md "$CLAUDE_DIR/commands/"
 
-echo "==> 4/4 Regenerating AGENT_INDEX.md for this machine"
+echo "==> 4/5 Regenerating AGENT_INDEX.md for this machine"
 "$KIT/regen-index.sh"
+
+echo "==> 5/5 Plugins + MCP connectors (needs claude CLI)"
+if command -v claude >/dev/null 2>&1; then
+  claude mcp add --scope user --transport http context7 https://mcp.context7.com/mcp 2>/dev/null || echo "    context7 already added or failed (non-fatal)"
+  claude plugin marketplace add Leonxlnx/taste-skill 2>/dev/null || true
+  claude plugin install --scope user taste-skill@taste-skill 2>/dev/null || echo "    taste-skill already installed or failed (non-fatal)"
+  claude plugin install --scope user typescript-lsp@claude-plugins-official 2>/dev/null || true
+  claude plugin install --scope user php-lsp@claude-plugins-official 2>/dev/null || true
+  echo "    context7 MCP + taste-skill, typescript-lsp, php-lsp plugins done"
+else
+  echo "    claude CLI not found — run the commands in EFFICIENCY_STACK.md manually"
+fi
 
 echo ""
 echo "Done. Installed:"
 echo "  - $(ls "$KIT"/agents/*.md | wc -l | tr -d ' ') agents -> ~/.claude/agents/"
-echo "  - $(ls -d "$KIT"/skills/*/ | wc -l | tr -d ' ') skills -> ~/.claude/skills/"
-echo "  - $(ls "$KIT"/commands/*.md | wc -l | tr -d ' ') commands: /onboard /task /build /genesis /rootcause /ship"
+echo "  - $(ls -d "$KIT"/skills/*/ | wc -l | tr -d ' ') skills -> ~/.claude/skills/ (+ gsap/threejs/motion/shader/web sets)"
+echo "  - $(ls "$KIT"/commands/*.md | wc -l | tr -d ' ') commands: /onboard /task /worker /build /genesis /rootcause /ship"
 echo ""
 echo "Restart Claude Code to pick up the commands."
 echo ""
