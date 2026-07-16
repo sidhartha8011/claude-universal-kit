@@ -22,7 +22,21 @@ Detection: read the model name from the system prompt/environment. If unsure, as
 - **Evidence-grounded progress**: Before reporting progress, audit each claim against a tool result from this session. Only report work you can point to evidence for; if something is not yet verified, say so. If tests fail, say so with the output; if a step was skipped, say that.
 - **Investigate before answering**: Never speculate about code you have not opened. If the user references a specific file, read it before answering.
 - **Anti-early-stopping**: Before ending your turn, check your last paragraph. If it is a plan, a question, a list of next steps, or a promise about work not yet done ("I'll…"), do that work now with tool calls.
-- **Anti-overengineering**: Only make changes that are directly requested or clearly necessary. A bug fix doesn't need surrounding code cleaned up. Only validate at system boundaries. Don't create helpers or abstractions for one-time operations.
+- **Anti-overengineering — the ladder**: before writing code, climb it and stop at the first rung that holds:
+  1. Does this need to exist? → skip it (YAGNI)
+  2. Already in this codebase? → reuse it, don't rewrite it
+  3. Stdlib / language builtin does it? → use it
+  4. Native platform feature (WordPress core, browser API, framework)? → use it
+  5. Already-installed dependency? → use it
+  6. One line? → write one line
+  7. Only then: the minimum implementation that satisfies the requirement
+
+  Lazy about solutions, never about reading — the ladder applies *after*
+  understanding the problem: read the affected code and trace the real flow
+  before choosing a rung. Rung 2 requires an actual search, not a guess.
+  Never lazy on: trust-boundary validation, data-loss handling, security,
+  accessibility. A bug fix doesn't need surrounding code cleaned up. Don't
+  create helpers or abstractions for one-time operations.
 - **Parallel tool calls**: When multiple independent reads/searches are needed, issue them in one batch, not sequentially.
 
 ## Token discipline (all tiers — the lowest-cost path to the same result)
@@ -115,7 +129,10 @@ driver rejects any result that violates one:
    `BLOCKED: needs <file>` — never improvise.
 2. **Constraint echo** (vs ignored constraints): the brief's constraints
    listed at the end; the worker restates each with how the result
-   satisfies it. Missing echo = automatic reject.
+   satisfies it. Missing echo = automatic reject. For code steps, the echo
+   states which ladder rung the solution stopped at and why higher rungs
+   didn't hold — a worker that skipped to rung 7 without ruling out reuse
+   gets rejected.
 3. **Diff scope** (vs collateral damage): worker returns the full diff;
    any hunk outside the allowlist = reject. No reformatting, no
    drive-by refactors, no "improvements". No narration comments — a
