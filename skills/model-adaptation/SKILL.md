@@ -133,6 +133,13 @@ driver rejects any result that violates one:
    states which ladder rung the solution stopped at and why higher rungs
    didn't hold — a worker that skipped to rung 7 without ruling out reuse
    gets rejected.
+
+   **The echo is a claim, not evidence — verify it.** Observed in practice:
+   a worker reported "wrote plan.md first, then edited ✓" for a file it
+   never created. Before accepting any step, the driver checks the claims
+   that leave traces: `ls` the artifacts the brief required, `git status`
+   / `git diff` for the actual files touched. Only the acceptance-check
+   output (step 4) is self-proving; everything else needs a look.
 3. **Diff scope** (vs collateral damage): worker returns the full diff;
    any hunk outside the allowlist = reject. No reformatting, no
    drive-by refactors, no "improvements". No narration comments — a
