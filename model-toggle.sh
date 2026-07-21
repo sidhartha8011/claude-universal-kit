@@ -25,6 +25,17 @@ write_settings() {  # stdin = new json
 
 current="$(jq -r '.env.ANTHROPIC_BASE_URL // ""' "$SETTINGS")"
 
+# `ccm status` (or -s) reports without toggling.
+if [ "${1:-}" = "status" ] || [ "${1:-}" = "-s" ]; then
+  if [ -n "$current" ]; then
+    echo "GLM  — $current"
+    echo "  opus → $(jq -r '.env.ANTHROPIC_DEFAULT_OPUS_MODEL' "$SETTINGS")   sonnet → $(jq -r '.env.ANTHROPIC_DEFAULT_SONNET_MODEL' "$SETTINGS")"
+  else
+    echo "ANTHROPIC — Fable / Opus / Sonnet, Remote Control available"
+  fi
+  exit 0
+fi
+
 if [ -n "$current" ]; then
   jq 'del(.env.ANTHROPIC_BASE_URL, .env.ANTHROPIC_AUTH_TOKEN,
           .env.ANTHROPIC_DEFAULT_OPUS_MODEL, .env.ANTHROPIC_DEFAULT_SONNET_MODEL,
