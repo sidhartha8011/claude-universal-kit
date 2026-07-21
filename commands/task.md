@@ -4,6 +4,8 @@ argument-hint: <task description>
 ---
 
 Step 0: load the `model-adaptation` skill and note the active tier (T1/T2/T3).
+If the tier is not obvious, run `echo "${ANTHROPIC_BASE_URL:-api.anthropic.com}"`
+once — a non-Anthropic host means a third-party model: treat as T3.
 Apply its universal invariants for the rest of this session.
 
 Read `.agent/CODEBASE_MAP.md` (or `.claude/CODEBASE_MAP.md`), the project CLAUDE.md, and recent entries of

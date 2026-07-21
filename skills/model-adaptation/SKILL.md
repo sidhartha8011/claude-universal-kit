@@ -15,7 +15,13 @@ Scaffolding is compensation for a capability gap. Apply it exactly where the gap
 | **T2 literal** | Opus 4.7/4.8, Sonnet 5 | `planned-execution` (non-trivial tasks), `grounded-loops` (on any failure), `spec-verifier` dispatch before done (multi-step tasks only) | emphatic tool triggers, forced-summary cadence, CoT tags |
 | **T3 legacy / open-weight** | Opus ≤4.6, Sonnet 4.x, Haiku, GLM-4.x **and GLM-5.x**, Kimi K2.x, DeepSeek V3.x/R1, Qwen3-Coder | everything in T2 **plus** CoT tags, forced summaries, plan-first always, named file paths in every instruction, best-of-N on high-stakes steps | nothing |
 
-Detection: read the model name from the system prompt/environment. If unsure, assume T2. Non-Anthropic models usually arrive via an Anthropic-compatible endpoint (`ANTHROPIC_BASE_URL` → z.ai, moonshot, etc.) and report a Claude-shaped alias — check the endpoint, not just the model string. These tiers degrade on long autonomous runs and tool-call chains well before they degrade on single edits: shorten steps rather than adding prose.
+Detection: read the model name from the system prompt/environment. If unsure, assume T2. Non-Anthropic models arrive via an Anthropic-compatible endpoint and report a Claude-shaped alias, so the model string lies — **check the endpoint**. One Bash call settles it:
+
+```bash
+echo "${ANTHROPIC_BASE_URL:-api.anthropic.com}"
+```
+
+Anything other than `api.anthropic.com` (z.ai, moonshot, …) is a third-party model: **treat as T3** regardless of what the model claims to be. Worth running at Step 0 of any session that might be routed. These tiers degrade on long autonomous runs and tool-call chains well before they degrade on single edits: shorten steps rather than adding prose.
 
 ## Universal invariants (all tiers — apply verbatim)
 
