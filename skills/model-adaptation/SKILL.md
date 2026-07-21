@@ -13,7 +13,7 @@ Scaffolding is compensation for a capability gap. Apply it exactly where the gap
 |---|---|---|---|
 | **T1 frontier** | Fable 5 / Mythos class | universal invariants only | all step-enumeration scaffolding |
 | **T2 literal** | Opus 4.7/4.8, Sonnet 5 | `planned-execution` (non-trivial tasks), `grounded-loops` (on any failure), `spec-verifier` dispatch before done (multi-step tasks only) | emphatic tool triggers, forced-summary cadence, CoT tags |
-| **T3 legacy / open-weight** | Opus ≤4.6, Sonnet 4.x, Haiku, GLM-4.x, Kimi K2.x, DeepSeek V3.x/R1, Qwen3-Coder | everything in T2 **plus** CoT tags, forced summaries, plan-first always, named file paths in every instruction, best-of-N on high-stakes steps | nothing |
+| **T3 legacy / open-weight** | Opus ≤4.6, Sonnet 4.x, Haiku, GLM-4.x **and GLM-5.x**, Kimi K2.x, DeepSeek V3.x/R1, Qwen3-Coder | everything in T2 **plus** CoT tags, forced summaries, plan-first always, named file paths in every instruction, best-of-N on high-stakes steps | nothing |
 
 Detection: read the model name from the system prompt/environment. If unsure, assume T2. Non-Anthropic models usually arrive via an Anthropic-compatible endpoint (`ANTHROPIC_BASE_URL` → z.ai, moonshot, etc.) and report a Claude-shaped alias — check the endpoint, not just the model string. These tiers degrade on long autonomous runs and tool-call chains well before they degrade on single edits: shorten steps rather than adding prose.
 
@@ -114,8 +114,8 @@ Same economics as the sandwich (cheap tokens still do the labor) but the
 weak model never holds the task — only a brief it cannot drift from.
 
 **Routing is a plan-time decision, not an in-flight choice.** Every step
-carries a `route:` (sonnet | opus | driver) in `plan.md`, approved at the
-confirmation gate. Sonnet = scoped single-file mechanical work. Opus
+carries a `route:` (glm | sonnet | opus | driver) in `plan.md`, approved at
+the confirmation gate. `glm` = a cross-provider worker (see below). Sonnet = scoped single-file mechanical work. Opus
 worker = multi-file coherence, careful edits. Driver = genuine judgment
 only, justified per step, ≤~20% of steps — a driver that "just does it
 itself" is the failure mode: frontier tokens doing labor a worker handles.
@@ -125,8 +125,17 @@ Failure reroutes upward (sonnet → opus → driver), never silently.
 driver rejects any result that violates one:
 
 1. **File allowlist** (vs wrong files): the exact paths the worker may
-   touch. If the change seems to need any other file, return
+   touch. If the goal can't be reached within them, return
    `BLOCKED: needs <file>` — never improvise.
+
+   **Workers route around impossible constraints rather than blocking.**
+   Observed: told to change `app.py`'s behaviour but allowed only
+   `store.py`, a worker left `app.py` untouched (guard held) and instead
+   added import-time side effects to `store.py` — violating a project
+   convention it was never shown. Tests, acceptance check, and allowlist
+   all passed. Only reading the diff caught it. So: state anti-workaround
+   explicitly in briefs, and always include the map's relevant conventions
+   and gotchas — the worker shares the filesystem, not the map.
 2. **Constraint echo** (vs ignored constraints): the brief's constraints
    listed at the end; the worker restates each with how the result
    satisfies it. Missing echo = automatic reject. For code steps, the echo
@@ -156,10 +165,20 @@ spawn a GLM subagent directly. Instead, shell out — the driver calls, via
 Bash, from the project directory:
 
 ```bash
-~/.claude/universal-kit/glm-worker.sh "<self-contained brief>"
-~/.claude/universal-kit/glm-worker.sh -f brief.md      # longer briefs
-GLM_WORKER_MODEL=glm-4.7 ~/.claude/universal-kit/glm-worker.sh "..."
+~/.claude/universal-kit/glm-worker.sh -f brief.md          # always -f or stdin
+printf '%s' "$brief" | ~/.claude/universal-kit/glm-worker.sh -
+GLM_WORKER_MODEL=glm-4.7   # cheaper tier for trivial steps
+GLM_WORKER_CONTRACT=task   # whole-task scope instead of a file allowlist
 ```
+
+**Never pass a brief inline.** Briefs contain backticks and `$` — the
+driver's own shell expands or executes them before the worker ever runs
+(verified: an inline brief executed its acceptance command in the driver's
+shell, then aborted on `bad substitution`). Long runs exceed the Bash
+tool's 10-minute ceiling: redirect to a log, dispatch in the background,
+and poll. Check the exit code before interpreting any diff — a run killed
+by exhausted z.ai quota leaves a half-applied diff that reads as delivered
+work.
 
 It runs the brief headlessly on GLM-5.2 (Z.AI billing, off the Claude
 plan) with the four guards above enforced in its system prompt, and
