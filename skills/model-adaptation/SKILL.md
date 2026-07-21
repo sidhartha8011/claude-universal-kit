@@ -142,6 +142,28 @@ driver rejects any result that violates one:
    exact command; the worker returns its verbatim output. A completion
    claim without command output is not done.
 
+### Cross-provider workers (Claude drives, GLM executes)
+
+Subagents inherit the session's API endpoint, so a Claude session cannot
+spawn a GLM subagent directly. Instead, shell out — the driver calls, via
+Bash, from the project directory:
+
+```bash
+~/.claude/universal-kit/glm-worker.sh "<self-contained brief>"
+~/.claude/universal-kit/glm-worker.sh -f brief.md      # longer briefs
+GLM_WORKER_MODEL=glm-4.7 ~/.claude/universal-kit/glm-worker.sh "..."
+```
+
+It runs the brief headlessly on GLM-5.2 (Z.AI billing, off the Claude
+plan) with the four guards above enforced in its system prompt, and
+returns the diff summary, the acceptance-check output, and the constraint
+echo. The driver verifies that output before dispatching the next brief;
+two failures on one brief and the driver does it itself.
+
+Use it when the plan has many mechanical steps and Claude quota is scarce.
+Briefs must be fully self-contained — the worker shares the filesystem,
+not the conversation.
+
 ## De-prescription rule
 
 On every model upgrade, re-run a representative task with the lower-tier layer removed and keep whichever output is better. Prune any static instruction that fails the test: *would removing it cause mistakes?*
