@@ -1,0 +1,4 @@
+.glm-key
+*.key
+.env
+.env.*
