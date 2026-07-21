@@ -12,9 +12,12 @@ agents, and project files. So do **not** summarise the codebase into the
 brief — hand it `/task` and let it read the map itself. Your cost is the
 dispatch plus the review, not a briefing.
 
-**0 — Resolve paths.** Use `.agent/` if it exists, else `.claude/`; call it
-`$A`. Confirm `$A/CODEBASE_MAP.md` exists; if not, tell me to run /onboard
-and stop. Note the current git state so you can diff against it later.
+**0 — Resolve paths and check quota.** Use `.agent/` if it exists, else
+`.claude/`; call it `$A`. Confirm `$A/CODEBASE_MAP.md` exists; if not, tell
+me to run /onboard and stop. Run `~/.claude/universal-kit/glm-quota.sh` —
+if the 5-hour window is above ~85%, say so and ask before dispatching: a
+run that exhausts quota mid-task leaves a half-applied diff. Note the
+current git state so you can diff against it later.
 
 **1 — Write the dispatch file** `$A/glm-run-r1.md` containing exactly:
 

@@ -38,6 +38,7 @@ Done and merging?                      → /ship
 | `regen-index.sh` | Rebuild `AGENT_INDEX.md` after pulling sources |
 | `claude-glm.sh` | Launch an interactive GLM session (terminal) — alias `claude-glm` |
 | `glm-worker.sh` | Run one brief on GLM headlessly (what the `/task-glm*` commands call) |
+| `glm-quota.sh` | Remaining Z.AI quota (5h / weekly / MCP) — alias `glmq` |
 | `model-toggle.sh` | Global provider toggle — alias `ccm`, `ccm status` |
 | `codex-bootstrap.sh` | Expose the kit to Codex under `~/.codex` |
 
