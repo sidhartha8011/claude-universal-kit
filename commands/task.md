@@ -6,8 +6,8 @@ argument-hint: <task description>
 Step 0: load the `model-adaptation` skill and note the active tier (T1/T2/T3).
 Apply its universal invariants for the rest of this session.
 
-Read `.claude/CODEBASE_MAP.md`, the project CLAUDE.md, and recent entries of
-`.claude/SESSION_LOG.md`. If there is no map, tell me to run /onboard and stop.
+Read `.agent/CODEBASE_MAP.md` (or `.claude/CODEBASE_MAP.md`), the project CLAUDE.md, and recent entries of
+`.agent/SESSION_LOG.md` (or `.claude/SESSION_LOG.md`). If there is no map, tell me to run /onboard and stop.
 
 On T2/T3: if the change is not describable in one sentence, load
 `planned-execution` and produce `plan.md` before editing any file. On T1:
@@ -52,6 +52,6 @@ to me.
 
 Apply the evidence-grounded-progress invariant to the final report: what
 changed, which specialists were used, and how you verified it. Append a
-short entry to `.claude/SESSION_LOG.md`.
+short entry to `.agent/SESSION_LOG.md` (or `.claude/SESSION_LOG.md`).
 
 TASK: $ARGUMENTS

@@ -113,6 +113,23 @@ the commands register.
 Prefer pasting a prompt? Use [SETUP_PROMPT.md](SETUP_PROMPT.md) — drop it into
 a fresh Claude Code session and it runs the whole setup for you.
 
+### Codex adapter
+
+Keep this kit in the same `~/.claude/universal-kit` folder and expose its
+skills to Codex:
+
+```bash
+chmod +x ~/.claude/universal-kit/*.sh
+~/.claude/universal-kit/codex-bootstrap.sh
+```
+
+The adapter symlinks kit skills into `~/.codex/skills/`, mirrors workflow
+prompts into `~/.codex/prompts/universal-kit/`, and keeps shared project
+memory in `.claude/CODEBASE_MAP.md` / `.claude/SESSION_LOG.md`. Codex does not
+load Claude slash commands directly, so use the workflows by asking naturally,
+for example: "Use the universal-kit task workflow: <task>". See
+[CODEX.md](CODEX.md).
+
 ### Already have the source repos
 
 ```bash
@@ -166,6 +183,29 @@ definitions — injecting non-installed specialists into general-purpose
 subagents at runtime. Each subagent gets only the context it needs; the
 orchestrator integrates the results. You pay for a specialist's definition
 only when it's actually used.
+
+---
+
+## Works with any agent, not just Claude Code
+
+The project-level workflow is tool-agnostic. One command sets up a repo so
+Claude Code, Codex, Cursor, Copilot, Gemini CLI, opencode, Antigravity,
+Kimi, Cline, Roo, Zed and Amp all follow the same contract and read the
+same artifacts:
+
+```bash
+~/.claude/universal-kit/install-project.sh /path/to/project
+```
+
+It writes `AGENTS.md` (the canonical contract), `.agent/` (map, session
+log, plan), and small pointer files at each tool's expected path —
+`CLAUDE.md`, `GEMINI.md`, `.github/copilot-instructions.md`,
+`.cursor/rules/agents.mdc`, `.clinerules`. Nothing is duplicated; pointers
+reference the contract. Existing files are never overwritten.
+
+Running GLM, Kimi, DeepSeek or Qwen? They inherit all of it — and
+`model-adaptation` classifies them T3, loading the extra scaffolding they
+need. Details and endpoint config: [PORTABILITY.md](PORTABILITY.md).
 
 ---
 

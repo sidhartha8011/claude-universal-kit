@@ -10,7 +10,7 @@ pin review/verification roles (`spec-verifier`, `security-auditor`) to the
 strongest model alias available (`opus` by default), regardless of the
 session model.
 
-Context: read `.claude/CODEBASE_MAP.md` if present. Your specialist roster
+Context: read `.agent/CODEBASE_MAP.md` (or `.claude/CODEBASE_MAP.md`) if present. Your specialist roster
 is `~/.claude/universal-kit/AGENT_INDEX.md` — one line per agent/skill with
 the path to its full definition.
 
@@ -32,6 +32,6 @@ execute yourself.
 If something is ambiguous enough to change the architecture, ask me once,
 up front. Don't commit unless I ask. When done, report what was built, who
 did what, and the verification proof; append a short entry to
-`.claude/SESSION_LOG.md`.
+`.agent/SESSION_LOG.md` (or `.claude/SESSION_LOG.md`).
 
 REQUIREMENT: $ARGUMENTS

@@ -7,8 +7,8 @@ Step 0: load `model-adaptation`. This command assumes the session runs on a
 strong model (Fable/Opus) — if the current model is Sonnet-tier, say so and
 ask me to switch before proceeding.
 
-Read `.claude/CODEBASE_MAP.md`, the project CLAUDE.md, and recent
-`.claude/SESSION_LOG.md` entries. If there is no map, tell me to run
+Read `.agent/CODEBASE_MAP.md` (or `.claude/CODEBASE_MAP.md`), the project CLAUDE.md, and recent
+`.agent/SESSION_LOG.md` (or `.claude/SESSION_LOG.md`) entries. If there is no map, tell me to run
 /onboard and stop.
 
 Plan per `planned-execution`, and **route every step at plan time** — each
@@ -43,6 +43,6 @@ address P0/P1 findings, max 3 rounds, then surface what remains.
 Constraints: minimal diff; ask before adding dependencies; don't commit
 unless I ask. Report per the evidence-grounded-progress invariant: what
 changed, the actual routing split (planned vs executed, with any reroutes),
-and verification proof. Append a short entry to `.claude/SESSION_LOG.md`.
+and verification proof. Append a short entry to `.agent/SESSION_LOG.md` (or `.claude/SESSION_LOG.md`).
 
 TASK: $ARGUMENTS

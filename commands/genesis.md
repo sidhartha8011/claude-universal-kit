@@ -19,7 +19,7 @@ Engage `architect-review` for this phase to validate the design before any
 code is written.
 
 **Phase 2 — Map before code**
-Write `.claude/CODEBASE_MAP.md` (template in
+Write `.agent/CODEBASE_MAP.md` (or `.claude/CODEBASE_MAP.md`) (template in
 `~/.claude/universal-kit/templates/`) from the approved architecture BEFORE
 feature code, and keep it current. Create the project CLAUDE.md and
 SESSION_LOG.md alongside it.

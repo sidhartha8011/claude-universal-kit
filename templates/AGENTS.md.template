@@ -1,0 +1,81 @@
+# AGENTS.md
+
+Working contract for any AI coding agent in this repo. Tool-agnostic by
+design — Claude Code, Codex, Cursor, Copilot, Gemini CLI, opencode,
+Antigravity, Kimi, Cline, Roo, Zed, Amp and others all read this (directly
+or via a pointer file).
+
+## Read first
+
+| Artifact | Path | What it is |
+|---|---|---|
+| Codebase map | `.agent/CODEBASE_MAP.md` | How this repo is laid out, every external surface with `file:line`. Read it instead of re-exploring. |
+| Session log | `.agent/SESSION_LOG.md` | Append 3 lines per task: what changed, why, how verified. |
+| Active plan | `.agent/plan.md` | Present during multi-step work. Steps carry files, intent, verification command, status. |
+
+If `.agent/CODEBASE_MAP.md` is missing, build it first (see Onboarding).
+If it contradicts the code, fix the map as part of your change.
+
+## Hard rules
+
+- Minimal diff. Only what was requested or clearly necessary.
+- Ask before adding dependencies.
+- Never commit or push unless explicitly asked.
+- Never weaken auth, validation, or security to make something pass.
+- No narration comments. A comment survives only if it states a constraint
+  the code can't show (why, never what).
+
+## Before writing code — the ladder
+
+Stop at the first rung that holds:
+
+1. Does this need to exist? → skip it
+2. Already in this codebase? → reuse it (search, don't guess)
+3. Stdlib / language builtin does it? → use it
+4. Native platform feature? → use it
+5. Already-installed dependency? → use it
+6. One line? → write one line
+7. Only then: the minimum implementation
+
+Lazy about solutions, never about reading — trace the real code flow first.
+Never lazy on: trust boundaries, data loss, security, accessibility.
+
+## Definition of done
+
+A change is done when a command proves it — build, tests, type-check, or an
+observed run. Report the command and its output. Never claim "it works"
+without evidence. If tests fail, say so with the output; if a step was
+skipped, say that.
+
+## Retry discipline
+
+On failure: quote the exact error into the next attempt. Never retry on
+introspection alone. Cap at 3 attempts, then change strategy rather than
+repeating. Never edit tests or plan items to make state look complete.
+
+## Multi-step work
+
+Non-trivial change (more than a one-sentence diff): write `.agent/plan.md`
+first — numbered steps, each with files touched, change intent, and its
+verification command. Confirm the plan before editing. Execute one step at
+a time; mark a step done only on evidence.
+
+## Onboarding (no map yet)
+
+Explore read-only, then write `.agent/CODEBASE_MAP.md`: stack and entry
+points, directory layout with purpose, every external surface (routes,
+handlers, jobs, pages, CLI commands) with `file:line` and required auth,
+data model, build/test/run commands, conventions, and known gotchas.
+Summarize and wait before editing anything else.
+
+## Project specifics
+
+<!-- Fill these in. Everything above is the portable contract; this section
+     is what makes it yours. -->
+
+- **Stack**:
+- **Run locally**:
+- **Test**:
+- **Build**:
+- **Conventions that differ from the default**:
+- **Do not touch**:

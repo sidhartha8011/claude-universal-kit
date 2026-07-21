@@ -2,7 +2,7 @@
 description: Onboard Claude to this project — build the codebase map, then wait for go-ahead
 ---
 
-Goal: produce `.claude/CODEBASE_MAP.md` so future sessions can work in this
+Goal: produce `.agent/CODEBASE_MAP.md` (or `.claude/CODEBASE_MAP.md`) so future sessions can work in this
 codebase without re-exploring it.
 
 If the map exists and is under 7 days old, read it, confirm it still matches
