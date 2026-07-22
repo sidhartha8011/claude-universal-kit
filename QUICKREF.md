@@ -39,6 +39,7 @@ Done and merging?                      → /ship
 | `claude-glm.sh` | Launch an interactive GLM session (terminal) — alias `claude-glm` |
 | `glm-worker.sh` | Run one brief on GLM headlessly (what the `/task-glm*` commands call) |
 | `glm-quota.sh` | Remaining Z.AI quota (5h / weekly / MCP) — alias `glmq` |
+| `zcode-bootstrap.sh` | Install kit skills into ZCode (`~/.zcode/skills/`) |
 | `model-toggle.sh` | Global provider toggle — alias `ccm`, `ccm status` |
 | `codex-bootstrap.sh` | Expose the kit to Codex under `~/.codex` |
 
