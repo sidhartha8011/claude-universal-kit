@@ -5,7 +5,7 @@
 | Command | When | What it does |
 |---|---|---|
 | `/onboard` | First time in a project | Explores via read-only subagents, writes `CODEBASE_MAP.md`, waits |
-| `/task <desc>` | 90% of work | Reads map + log, picks the right specialists, does it, verifies |
+| `/task <desc>` | 90% of work | Reads map + log, picks the right specialists, does it, verifies. No tier logic — direct execution |
 | `/worker <desc>` | Big task, want frontier quality at lower cost | Strong model plans + routes each step to opus/sonnet workers |
 | `/build <req>` | Multi-part feature, parallel domains | Decomposes, pulls specialists from AGENT_INDEX, integrates |
 | `/genesis <idea>` | Brand-new project from zero | Requirements → one approval gate → scaffold + map → milestones |

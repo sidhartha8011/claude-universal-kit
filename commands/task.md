@@ -3,22 +3,9 @@ description: Work on a task with the codebase map as context
 argument-hint: <task description>
 ---
 
-Step 0: load the `model-adaptation` skill and note the active tier (T1/T2/T3).
-If the tier is not obvious, run `echo "${ANTHROPIC_BASE_URL:-api.anthropic.com}"`
-once — a non-Anthropic host means a third-party model: treat as T3.
-Apply its universal invariants for the rest of this session.
-
-Read `.agent/CODEBASE_MAP.md` (or `.claude/CODEBASE_MAP.md`), the project CLAUDE.md, and recent entries of
-`.agent/SESSION_LOG.md` (or `.claude/SESSION_LOG.md`). If there is no map, tell me to run /onboard and stop.
-
-On T2/T3: if the change is not describable in one sentence, load
-`planned-execution` and produce `plan.md` before editing any file. On T1:
-state goal, constraints, and per-change verification, then act.
-
-If the task says "plan only": produce `plan.md` (per `planned-execution`
-Phase 1–2, on any tier), present it, and stop — this is the
-frontier-sandwich handoff; I may switch the session to a cheaper model
-before saying continue. "Continue executing plan.md" resumes at Phase 4.
+Read `.agent/CODEBASE_MAP.md` (or `.claude/CODEBASE_MAP.md`), the project
+CLAUDE.md, and recent entries of `.agent/SESSION_LOG.md` (or
+`.claude/SESSION_LOG.md`). If there is no map, tell me to run /onboard and stop.
 
 Do the task below to mergeable quality, following the project's conventions.
 Constraints: minimal diff; ask before adding dependencies; don't commit
@@ -41,19 +28,11 @@ unless I ask. If reality contradicts the map, update the map.
 For small single-file changes work inline. For anything touching 3+ files or
 needing visual verification, spawn the relevant specialist as a subagent.
 
-If any check fails, load `grounded-loops` before retrying — no ungrounded
-second attempts. If execution on a T2 model accumulates 2+ verifier
-rejections or escalations, stop and recommend worker mode
-(`model-adaptation` → inverted sandwich) instead of grinding.
+If a check fails, load `grounded-loops` before retrying — quote the exact
+failing output into the next attempt, and cap at 3 before changing approach.
 
-Done gate (multi-step tasks, T2/T3; on T1 only for high-stakes changes): the
-task is not done when the implementer says so. Dispatch the `spec-verifier`
-agent with the plan/spec excerpt and the diff; address every P0/P1 finding
-and re-dispatch — max 3 rounds, then stop and surface the remaining findings
-to me.
-
-Apply the evidence-grounded-progress invariant to the final report: what
-changed, which specialists were used, and how you verified it. Append a
+Back every "it works" claim with the command output that proves it. Report
+what changed, which specialists were used, and how you verified it. Append a
 short entry to `.agent/SESSION_LOG.md` (or `.claude/SESSION_LOG.md`).
 
 TASK: $ARGUMENTS

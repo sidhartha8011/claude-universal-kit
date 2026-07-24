@@ -1,6 +1,6 @@
 ---
 name: model-adaptation
-description: Load at session start (referenced by /task, /build, /genesis). Detects the running model tier and selects which boost skills and prompt snippets apply — weaker tiers get explicit process scaffolding, frontier tiers get it stripped.
+description: Model-tier routing for delegated work — loaded by /worker, /build, and /genesis. Detects the running model tier and selects which boost skills and prompt snippets apply; weaker tiers get explicit process scaffolding, frontier tiers get it stripped. Also defines the worker brief contract and cross-provider (GLM) delegation. Not needed for plain /task.
 ---
 
 # Model Adaptation

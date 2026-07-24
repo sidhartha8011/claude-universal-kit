@@ -19,14 +19,19 @@ if the 5-hour window is above ~85%, say so and ask before dispatching: a
 run that exhausts quota mid-task leaves a half-applied diff. Note the
 current git state so you can diff against it later.
 
-**1 — Write the dispatch file** `$A/glm-run-r1.md` containing exactly:
+**1 — Write the dispatch file** `$A/glm-run-r1.md` starting with:
 
 ```
 /task <the task, verbatim from my request>
 ```
 
-Add lines below it only for what the map does not already say — lane
-boundaries, files that must not be touched, an unusual acceptance command.
+Then add, on the lines below:
+- `Write $A/plan.md first — numbered steps, files touched, and the
+  verification command for each; append-only.` (`/task` does not plan on its
+  own, and step 5 verifies against this file.)
+- anything the map does not already say — lane boundaries, files that must
+  not be touched, an unusual acceptance command.
+
 Anything already in `CODEBASE_MAP.md` or `CLAUDE.md` is redundant: the
 worker reads them itself.
 
