@@ -22,7 +22,10 @@ code is written.
 Write `.agent/CODEBASE_MAP.md` (or `.claude/CODEBASE_MAP.md`) (template in
 `~/.claude/universal-kit/templates/`) from the approved architecture BEFORE
 feature code, and keep it current. Create the project CLAUDE.md and
-SESSION_LOG.md alongside it.
+SESSION_LOG.md alongside it. Once the first milestone has real code, run
+`graphify update .` if graphify is available and add `graphify-out/` to
+`.gitignore` — from then on later milestones can query structure instead
+of re-reading it (see `codebase-graph`).
 
 **Phase 3 — Build milestone by milestone**
 Each milestone must run end-to-end before the next starts. Use the right

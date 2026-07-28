@@ -11,7 +11,10 @@ Don't commit or push unless I say so.
 
 Run the review as a fresh-context `spec-verifier` dispatch (diff +
 requirements only — not this conversation); security-sensitive diffs also
-get `security-auditor`. Load `model-adaptation` token discipline; on any
+get `security-auditor`. If `graphify-out/` exists, refresh it
+(`graphify update .`) and run `graphify affected` on the symbols the diff
+changed — callers the diff doesn't show are exactly what breaks after
+merge (see `codebase-graph`). Load `model-adaptation` token discipline; on any
 failed check, retry per `grounded-loops` (max 3, evidence-quoted).
 
 SCOPE: $ARGUMENTS

@@ -22,7 +22,11 @@ the context it needs; you integrate the results.
 
 Every brief that edits files follows the worker brief contract
 (`model-adaptation`): file allowlist, constraints to echo, full-diff
-return, runnable acceptance check. Route worker models per step —
+return, runnable acceptance check. Where `graphify-out/` exists, scope the
+decomposition with the `codebase-graph` skill — `graphify query` to find
+where each part lives, `graphify affected "<symbol>"` to derive each
+allowlist and to see which parallel specialists would collide before you
+dispatch them. Route worker models per step —
 mechanical/scoped → `sonnet`; multi-file coherence → `opus` worker;
 review/verification → strongest (per Step 0). The orchestrator edits
 files itself only after a delegated brief fails twice. Verify each delegated

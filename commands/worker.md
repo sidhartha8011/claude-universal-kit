@@ -27,7 +27,11 @@ Execute as the driver: you hold `plan.md` and all judgment; you never
 delegate planning, review, or debugging. Dispatch each step to its routed
 worker (Agent tool, `model:` per route) with a self-contained brief under
 the **worker brief contract**: file allowlist, constraints to echo,
-full-diff return, runnable acceptance check with verbatim output. Briefs
+full-diff return, runnable acceptance check with verbatim output. Derive
+the allowlist from `graphify affected "<symbol>"` when `graphify-out/`
+exists (see `codebase-graph`) — that is the real blast radius, and a
+worker told exactly which files are in play cannot wander into ones that
+aren't. Briefs
 name the specialist skills the worker must load (e.g. `taste-skill` +
 `gsap-scrolltrigger` for an animated section; `threejs-*` for 3D) — a
 worker doesn't know the roster, the brief tells it. Verify

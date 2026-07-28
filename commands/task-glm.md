@@ -29,6 +29,10 @@ Then add, on the lines below:
 - `Write $A/plan.md first — numbered steps, files touched, and the
   verification command for each; append-only.` (`/task` does not plan on its
   own, and step 5 verifies against this file.)
+- if `graphify-out/` exists: `Run "graphify update ." first, then use
+  graphify query / affected to locate code instead of grepping.` — a fresh
+  worker session would otherwise trust a stale graph or grep the repo on
+  your metered quota.
 - anything the map does not already say — lane boundaries, files that must
   not be touched, an unusual acceptance command.
 

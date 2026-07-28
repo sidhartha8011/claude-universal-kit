@@ -19,10 +19,13 @@ Plan per `planned-execution`; every step in `$A/plan.md` gets a `route:`:
 Present the plan with routing; I approve before any edit.
 
 Execute each `glm` step by writing its brief to `$A/brief-step<N>.md` under
-the **worker brief contract**: file allowlist, the map's conventions and
-gotchas for those files (the worker shares the filesystem, not the map, and
-will otherwise break rules it was never shown), constraints to echo, and a
-runnable acceptance check with expected output. Then:
+the **worker brief contract**: file allowlist (derive it from `graphify
+affected "<symbol>"` when `graphify-out/` exists — see `codebase-graph`;
+it is both the true blast radius and quota the worker then doesn't spend
+grepping), the map's conventions and gotchas for those files (the worker
+shares the filesystem, not the map, and will otherwise break rules it was
+never shown), constraints to echo, and a runnable acceptance check with
+expected output. Then:
 
 `~/.claude/universal-kit/glm-worker.sh -f $A/brief-step<N>.md`
 
