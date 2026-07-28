@@ -6,7 +6,10 @@ Goal: produce `.agent/CODEBASE_MAP.md` (or `.claude/CODEBASE_MAP.md`) so future 
 codebase without re-exploring it.
 
 If the map exists and is under 7 days old, read it, confirm it still matches
-the codebase, and report ready.
+the codebase, and report ready. Before reporting, if `graphify` is on PATH
+but `graphify-out/` is missing, run `graphify update .` and add
+`graphify-out/` to `.gitignore` — the index is seconds and free, and every
+other command checks for it.
 
 Otherwise, first build a structural index for free — if `graphify` is on
 PATH, run `graphify update .` (seconds, no LLM), then `graphify god-nodes
