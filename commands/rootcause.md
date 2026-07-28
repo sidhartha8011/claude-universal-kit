@@ -10,6 +10,9 @@ regression test that would have caught it.
 
 Investigate from evidence outward: error text, logs, git diff of recent
 changes — read only the files the evidence implicates, not the subsystem.
+If `graphify-out/` exists, `graphify affected "<symbol from the stack
+trace>"` returns callers and dependents with `file:line` in one call (see
+`codebase-graph`) — cheaper than grepping outward for them.
 If a fix attempt fails, follow `grounded-loops`: quote the exact failing
 output into the retry, 3 attempts max, then switch strategy or escalate.
 

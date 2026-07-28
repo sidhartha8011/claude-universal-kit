@@ -8,9 +8,16 @@ codebase without re-exploring it.
 If the map exists and is under 7 days old, read it, confirm it still matches
 the codebase, and report ready.
 
-Otherwise explore via read-only subagents (parallel, one per area) so raw
-file contents stay out of this context — the map is the only artifact that
-matters. Write it using
+Otherwise, first build a structural index for free — if `graphify` is on
+PATH, run `graphify update .` (seconds, no LLM), then `graphify god-nodes
+--top 15` to get the architectural hubs. That gives you the skeleton
+without reading a line of source; add `graphify-out/` to `.gitignore`.
+Skip silently if graphify isn't installed.
+
+Then explore via read-only subagents (parallel, one per area) so raw file
+contents stay out of this context — the map is the only artifact that
+matters. Use the hubs to aim that exploration at what matters instead of
+sweeping everything. Write the map using
 `~/.claude/universal-kit/templates/CODEBASE_MAP.md.template` — fill what
 exists, omit what doesn't. Record every external surface (routes, handlers,
 jobs, pages) with file:line and required auth — that table is what future

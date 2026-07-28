@@ -1,6 +1,12 @@
 # <Project Name> — Codebase Map
 _Last updated: <date>_
 
+<!-- If graphify-out/ exists, structural questions (what calls X, what breaks
+     if I change X, where does this live) are answered by `graphify query` /
+     `graphify affected` — see the codebase-graph skill. Keep THIS file for
+     what a parser cannot know: conventions, gotchas, ownership, and why. -->
+
+
 ## Identity
 <!-- what it is, version, languages, frameworks, min runtime versions -->
 

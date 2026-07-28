@@ -28,6 +28,12 @@ unless I ask. If reality contradicts the map, update the map.
 For small single-file changes work inline. For anything touching 3+ files or
 needing visual verification, spawn the relevant specialist as a subagent.
 
+To locate code, prefer the `codebase-graph` skill over grepping when
+`graphify-out/` exists: `graphify query "<question>"` for where something
+lives, and `graphify affected "<symbol>"` before editing anything shared —
+it returns the blast radius with `file:line` in one call. Read the actual
+file once the graph has pointed at it.
+
 If a check fails, load `grounded-loops` before retrying — quote the exact
 failing output into the next attempt, and cap at 3 before changing approach.
 
