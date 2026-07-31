@@ -13,8 +13,17 @@ No change is "done" until verified with evidence. Run the project's real gates a
 2. **Types** — `tsc --noEmit` / `pyright`. Fix critical errors before continuing.
 3. **Lint** — project's linter (`npm run lint`, `ruff check`).
 4. **Tests** — with coverage. Meet the project's configured threshold; if it has none, don't invent a number — report the figure and flag genuinely untested paths.
-5. **Security scan** — grep the diff for leaked secrets (`sk-`, `api_key`) and stray `console.log` in src.
+5. **Security scan** — a real secret scanner (gitleaks/trufflehog) over the diff, not just a grep for `sk-`/`api_key`. This one **blocks**: a leaked credential is not a warning.
 6. **Diff review** — `git diff --stat`; check each changed file for unintended changes, missing error handling, edge cases.
+
+An architectural rule that only exists in prose will drift. Where the project
+supports it, make the invariant executable and add it here:
+- **Import boundaries** — dependency-cruiser / ArchUnit-style check that the
+  layering (handler → service → repository) actually holds, so violations fail
+  CI rather than waiting for a reviewer to notice.
+- **Query counts** — assert the number of queries in tests covering list and
+  detail endpoints; an N+1 reintroduced by a refactor is invisible to every
+  other gate here.
 
 Use the project's actual commands (check package.json scripts / Makefile) rather than guessing.
 

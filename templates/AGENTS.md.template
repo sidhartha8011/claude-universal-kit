@@ -62,6 +62,10 @@ observed run. Report the command and its output. Never claim "it works"
 without evidence. If tests fail, say so with the output; if a step was
 skipped, say that.
 
+A green build is not runtime proof. For anything touching I/O, migrations,
+jobs, or config, "done" also means it was **executed and observed** — the
+path actually ran, at least once, and you saw the result.
+
 ## Retry discipline
 
 On failure: quote the exact error into the next attempt. Never retry on

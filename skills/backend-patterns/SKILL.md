@@ -41,7 +41,7 @@ One `ApiError` class carrying `statusCode`, thrown from services; one `errorHand
 - `ZodError` → 400 with `details: error.errors`
 - anything else → log full error server-side, return generic 500 (never leak internals)
 
-Transient external calls (APIs, upstreams) retry with exponential backoff: 3 attempts, delays 1s/2s/4s.
+Transient external calls retry at **exactly one layer** — every other layer fails fast and propagates, since layered retries multiply (3 attempts at 3 layers = 27 requests hitting an already-degraded dependency). Max 3 attempts with full jitter, `random(0, min(cap, base·2^n))` — fixed 1s/2s/4s synchronises the herd and re-kills the dependency the moment it recovers. Retry only connection failures, timeouts, 429 and 5xx, never 4xx; honour `Retry-After`; and only when the call is idempotent or carries an idempotency key. Set connect *and* overall deadlines on every outbound call, from the dependency's observed p99.9. Concurrency, rollout and partial-failure rules live in `production-runtime`.
 
 ## Auth
 
@@ -49,7 +49,7 @@ JWT in `Authorization: Bearer`; `requireAuth(request)` verifies and returns the 
 
 ## Rate limiting
 
-Sliding-window per identifier (IP from `x-forwarded-for`, or userId). In-memory Map is fine single-instance; use Redis when horizontally scaled. Return 429 per api-design conventions.
+Sliding-window per identifier (IP from `x-forwarded-for`, or userId). Limiter state belongs in Redis or the gateway — an in-memory Map across N replicas enforces N× the documented tier, so it is single-instance only. Return 429 per api-design conventions.
 
 ## Background work
 
@@ -57,4 +57,6 @@ Don't block request handlers on slow work (indexing, embeddings, email). Enqueue
 
 ## Logging
 
-Structured JSON lines only — `{ timestamp, level, message, requestId, userId, ...context }`. Generate a `requestId` per request and thread it through every log entry. `console.log` of bare strings doesn't ship.
+Structured JSON lines only — `{ timestamp, level, message, requestId, trace_id, span_id, userId, ...context }`. Generate a `requestId` per request and thread it through every log entry. `console.log` of bare strings doesn't ship.
+
+Propagate W3C `traceparent` across every service **and queue** boundary — put it in async job payloads too, or traces dead-end at the queue and cross-service requests can only be reconstructed by grepping timestamps. Emit RED metrics (rate/errors/duration) per endpoint *and per outbound dependency call, at the call site*. Metric label values must come from bounded sets (method, status class, route template, service, region) — never user ID, request ID, email, order ID, raw path, or timestamp: unbounded labels are a cardinality explosion that takes down the metrics backend.

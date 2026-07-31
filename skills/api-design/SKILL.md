@@ -53,6 +53,8 @@ Error — every error, every endpoint:
 Offset meta: `{ "total", "page", "per_page", "total_pages" }` plus `links.self/next/last`.
 Cursor meta: `{ "has_next", "next_cursor" }` — cursor is opaque base64; fetch limit+1 rows to compute `has_next`. Offset breaks past ~100K rows and under concurrent inserts; don't offer it on public list endpoints.
 
+The server enforces `MAX_PAGE_SIZE`; the client's `limit` is validated and clamped, never trusted — an unclamped `limit=1000000` is a free DoS.
+
 ## Filtering, sorting, sparse fields
 
 ```

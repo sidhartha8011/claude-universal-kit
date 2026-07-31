@@ -28,6 +28,7 @@ verify your own output.
 - 3D / WebGL → `threejs-*` skills (fundamentals through postprocessing); shaders/generative → `shader-dev`
 - New feature with non-trivial architecture → consult `architect-review` before writing code
 - Auth, payments, user data, file uploads, or any external input → run `security-auditor` alongside
+- Migrations, transactions, queues/cron, webhooks, retries, health probes, or a first production deploy → load `production-runtime` (the failures types and tests can't see)
 - Database schema or query work → use `sql-pro`
 - Performance concern → use `performance-engineer`
 - PHP/WordPress → use `php-pro`

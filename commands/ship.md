@@ -9,6 +9,11 @@ issues, fill thin test coverage, and verify the feature end-to-end with
 proof. Flag anything in the diff that doesn't belong to this feature.
 Don't commit or push unless I say so.
 
+If the diff touches migrations, transactions, queues, cron, webhooks,
+retries, pooling, or shutdown/health paths, review it against
+`production-runtime` — those failures appear only under concurrency,
+rollout, or partial failure, so a green build says nothing about them.
+
 Run the review as a fresh-context `spec-verifier` dispatch (diff +
 requirements only — not this conversation); security-sensitive diffs also
 get `security-auditor`. If `graphify-out/` exists, refresh it
