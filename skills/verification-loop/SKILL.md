@@ -37,6 +37,6 @@ Issues to Fix:
 1. ...
 ```
 
-## Continuous Mode
+## Long sessions
 
-In long sessions, re-verify at checkpoints — after each completed function/component, before moving to the next task — rather than once at the end. PostToolUse hooks catch issues instantly; this skill is the deeper, full-suite pass.
+Run the full suite at meaningful boundaries — a finished milestone, before a PR — not after every function. Frontier models verify their own work as they go; adding checkpoint re-verification on top compounds with that and costs tokens without improving results. On T3/worker-tier models, where self-verification is unreliable, checkpoint more often. PostToolUse hooks are the cheap continuous layer; this skill is the deeper, full-suite pass.
