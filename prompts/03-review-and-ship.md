@@ -12,7 +12,7 @@ shipping. Use the universal-kit agents where they fit
 1. DIFF AUDIT — list every file changed vs main and its purpose in one
    line each. Flag anything that doesn't belong to this feature.
 
-2. CODE REVIEW — run /code-review at high effort. Apply the
+2. CODE REVIEW — run /code-review. Apply the
    code-reviewer agent's standards: correctness first, then
    simplification, then style. Fix what you find.
 

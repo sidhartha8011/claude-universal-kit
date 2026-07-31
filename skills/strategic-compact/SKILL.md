@@ -7,6 +7,12 @@ description: Suggests manual /compact at logical task boundaries (research→pla
 
 Auto-compaction fires at arbitrary points — often mid-task, destroying working state. Compact deliberately at phase boundaries instead, where the distilled output (a plan, a commit, a todo list) has already replaced the bulky context that produced it.
 
+**Opus 5 note**: with a 1M-token default window, compaction pressure is far
+lower — don't compact pre-emptively "to be safe"; each /compact discards
+cached prefix that was already paid for. The boundary discipline below still
+applies to genuinely long sessions and smaller-window models; on Opus 5 you
+just hit those boundaries far less often.
+
 ## Decision Guide
 
 | Phase transition | Compact? | Why |

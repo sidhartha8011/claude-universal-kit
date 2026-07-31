@@ -1,6 +1,6 @@
 ---
 name: tdd-workflow
-description: Load when implementing a new feature, fixing a bug, or refactoring — before writing any implementation code. Defines this project's TDD contract: tests first, 80% coverage gate, test placement, and mocking conventions.
+description: Load when implementing a new feature, fixing a bug, or refactoring — before writing any implementation code. Defines this project's TDD contract: tests first, the project's coverage gate, test placement, and mocking conventions.
 ---
 
 # TDD Workflow
@@ -9,7 +9,7 @@ Non-negotiable contract: tests are written and failing BEFORE implementation. Re
 
 ## The bar
 
-- **80% minimum** on branches, functions, lines, and statements — enforced via Jest `coverageThresholds` (global: 80 across the board). Run `npm run test:coverage` before declaring done.
+- **Coverage**: meet the project's configured threshold (Jest `coverageThresholds` or equivalent). Setting up a fresh project, 80% across the board is a sane default — but never impose it on an existing codebase with a different bar. Run the coverage command before declaring done.
 - Three layers, all required for a feature: unit (functions/components), integration (API routes, DB ops), E2E (Playwright, critical user flows only).
 - No skipped or disabled tests in a finished change. Unit suite stays under ~30s; individual unit tests under ~50ms.
 - Start from a user journey ("As a X, I want Y, so that Z"), derive test cases from it — including empty input, fallback paths (e.g. Redis down → substring search), and error paths, not just the happy path.

@@ -9,7 +9,9 @@ CLAUDE.md, and recent entries of `.agent/SESSION_LOG.md` (or
 
 Do the task below to mergeable quality, following the project's conventions.
 Constraints: minimal diff; ask before adding dependencies; don't commit
-unless I ask. If reality contradicts the map, update the map.
+unless I ask. If reality contradicts the map, note it and fold the map fix
+into the end of the task — the map sits in the cached context prefix, and
+editing it mid-session re-bills everything behind it.
 
 Deliver what was asked, at the scope intended — make routine judgment calls
 yourself, and check in only when different readings would lead to materially

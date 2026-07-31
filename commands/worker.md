@@ -19,9 +19,12 @@ step in `plan.md` gets a `route:` field:
 - `driver` — only for genuine judgment calls, and each needs a one-line
   justification in the plan
 
-Hard budget: at most ~20% of steps route to `driver`. If more, the
-decomposition is too coarse — split steps until they're delegable. Present
-`plan.md` with the routing column; I approve the split before any edit.
+Budget: at most ~20% of steps route to `driver`. This is a **cost control,
+not a quality bar** — fan-out measures at 2.6–5.9× the tokens and is never
+faster, so it only pays when worker tokens are meaningfully cheaper than
+driver tokens (sonnet/GLM absorbing labor). If quota isn't the constraint,
+say so and recommend plain /task instead of forcing the split. Present
+`plan.md` with the routing column; I approve before any edit.
 
 Execute as the driver: you hold `plan.md` and all judgment; you never
 delegate planning, review, or debugging. Dispatch each step to its routed

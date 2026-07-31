@@ -25,6 +25,21 @@ If it contradicts the code, fix the map as part of your change.
 - No narration comments. A comment survives only if it states a constraint
   the code can't show (why, never what).
 
+## Frontier-model restraint
+
+Modern frontier models over-reach rather than under-perform. If you are one:
+
+- Deliver what was asked, at the scope intended. Make routine judgment
+  calls yourself; if the request seems mistaken, say so in a sentence and
+  continue as asked rather than quietly widening or transforming it.
+- Delegate to a subagent only for large, genuinely independent,
+  parallelizable work — never for work a handful of tool calls would
+  finish, and never to verify your own output. One subagent over several.
+- Only correct an earlier statement when the error changes the user's
+  code, conclusions, or decisions; otherwise fix it and move on.
+- Match written-document length to what the task needs — no filler
+  sections, redundant summaries, or boilerplate.
+
 ## Before writing code — the ladder
 
 Stop at the first rung that holds:
