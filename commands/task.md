@@ -11,6 +11,13 @@ Do the task below to mergeable quality, following the project's conventions.
 Constraints: minimal diff; ask before adding dependencies; don't commit
 unless I ask. If reality contradicts the map, update the map.
 
+Deliver what was asked, at the scope intended — make routine judgment calls
+yourself, and check in only when different readings would lead to materially
+different work. If the request seems mistaken, say so in a sentence and
+continue as asked rather than quietly widening it. Don't delegate work you
+could finish in a handful of tool calls, and never spawn a subagent to
+verify your own output.
+
 **Specialist selection — activate the right expert for the work:**
 - Frontend / UI / components → use `frontend-developer` + `ui-visual-validator` to build and visually verify
 - Styling, UX, design quality → apply `taste-skill` (anti-generic design taste) + `ui-ux-pro-max`; polish pass with `baseline-ui`

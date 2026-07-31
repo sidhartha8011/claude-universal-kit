@@ -14,8 +14,11 @@ Context: read `.agent/CODEBASE_MAP.md` (or `.claude/CODEBASE_MAP.md`) if present
 is `~/.claude/universal-kit/AGENT_INDEX.md` — one line per agent/skill with
 the path to its full definition.
 
-Work inline when the task is small. Delegate to subagents when the work is
-parallel or reading-heavy: installed agent types spawn directly; for any
+Work inline when the task is small. Delegate only for large tracks that are
+genuinely independent and parallelizable — not for work you could finish in
+a handful of tool calls, and never to verify your own output. If one
+subagent suffices, use one; keep spawn counts low. Then: installed agent
+types spawn directly; for any
 other roster entry, Read its definition file and inject it into a
 general-purpose agent with a self-contained brief. Give each subagent only
 the context it needs; you integrate the results.

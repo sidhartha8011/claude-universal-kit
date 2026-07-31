@@ -41,8 +41,12 @@ twice → driver executes. Never quietly take over a step that hasn't
 failed — mid-flight route changes go through an updated plan.md.
 
 If any check fails, retry per `grounded-loops` — max 3, evidence-quoted.
-Done gate: dispatch `spec-verifier` with `plan.md` and the full diff;
-address P0/P1 findings, max 3 rounds, then surface what remains.
+Done gate: dispatch `spec-verifier` with `plan.md` and the full diff **when
+workers wrote the code** — verifying another model's output is not
+self-verification and still pays. If you executed the steps yourself on a
+frontier model, skip it: you already verify as you go, and a subagent that
+re-checks your own work is pure cost (`model-adaptation` → T1 restraint).
+Either way, address P0/P1 findings, max 3 rounds, then surface what remains.
 
 Constraints: minimal diff; ask before adding dependencies; don't commit
 unless I ask. Report per the evidence-grounded-progress invariant: what

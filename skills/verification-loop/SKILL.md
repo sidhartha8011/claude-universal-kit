@@ -1,6 +1,6 @@
 ---
 name: verification-loop
-description: Run before declaring any code change done, before creating a PR, or after a refactor — execute build, type-check, lint, tests, and a diff review, and back every "it works" claim with command output as evidence.
+description: The pre-merge gate checklist — build, type-check, lint, tests, security scan, diff review — for /ship, before a PR, or when explicitly asked to verify. Frontier models already verify as they work; do not load this as a routine after-every-change step.
 ---
 
 # Verification Loop
@@ -12,7 +12,7 @@ No change is "done" until verified with evidence. Run the project's real gates a
 1. **Build** — must compile. If it fails, stop and fix before anything else.
 2. **Types** — `tsc --noEmit` / `pyright`. Fix critical errors before continuing.
 3. **Lint** — project's linter (`npm run lint`, `ruff check`).
-4. **Tests** — with coverage. Target: 80% minimum.
+4. **Tests** — with coverage. Meet the project's configured threshold; if it has none, don't invent a number — report the figure and flag genuinely untested paths.
 5. **Security scan** — grep the diff for leaked secrets (`sk-`, `api_key`) and stray `console.log` in src.
 6. **Diff review** — `git diff --stat`; check each changed file for unintended changes, missing error handling, edge cases.
 

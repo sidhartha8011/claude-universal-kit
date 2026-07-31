@@ -11,7 +11,7 @@ Scaffolding is compensation for a capability gap. Apply it exactly where the gap
 
 | Tier | Models | Load | Suppress |
 |---|---|---|---|
-| **T1 frontier** | Fable 5 / Mythos class | universal invariants only | all step-enumeration scaffolding |
+| **T1 frontier** | Fable 5 / Mythos class, **Opus 5** | universal invariants **+ the T1 restraint block below** | all step-enumeration scaffolding, and every self-verification instruction |
 | **T2 literal** | Opus 4.7/4.8, Sonnet 5 | `planned-execution` (non-trivial tasks), `grounded-loops` (on any failure), `spec-verifier` dispatch before done (multi-step tasks only) | emphatic tool triggers, forced-summary cadence, CoT tags |
 | **T3 legacy / open-weight** | Opus ≤4.6, Sonnet 4.x, Haiku, GLM-4.x **and GLM-5.x**, Kimi K2.x, DeepSeek V3.x/R1, Qwen3-Coder | everything in T2 **plus** CoT tags, forced summaries, plan-first always, named file paths in every instruction, best-of-N on high-stakes steps | nothing |
 
@@ -48,7 +48,7 @@ Anything other than `api.anthropic.com` (z.ai, moonshot, …) is a third-party m
 ## Token discipline (all tiers — the lowest-cost path to the same result)
 
 - **Map, not codebase**: answer from `.claude/CODEBASE_MAP.md` first; open source files only for the parts you're changing. Read excerpts (offset/limit), not whole files.
-- **Delegate reading-heavy exploration** to a subagent (Explore-type) — conclusions come back, raw file contents never enter the main context.
+- **Delegate reading-heavy exploration** to a subagent (Explore-type) — conclusions come back, raw file contents never enter the main context. *T2/T3 only:* on T1 see the restraint block — those models already delegate readily and the nudge compounds.
 - **Library APIs: resolve, don't guess** — append "use context7" for any unfamiliar/current API (WP hooks, Next.js, package signatures). One doc lookup is cheaper than one wrong-signature retry loop.
 - **Never re-read what you just wrote or edited** — the edit result already confirms it. Never re-verify what's already evidenced this session.
 - **CLI over MCP when both exist** (`gh`, `git`, `psql`): zero tool-definition overhead.
@@ -57,13 +57,52 @@ Anything other than `api.anthropic.com` (z.ai, moonshot, …) is a third-party m
 
 ## Tier-conditional snippets
 
+### T1 restraint block (Opus 5 and later frontier models)
+
+T1 used to be purely subtractive. Opus 5 is the first tier where the
+frontier branch has to *add* constraints back — its failure mode is
+over-reach, not under-performance. Anthropic documents four tendencies:
+it self-verifies unprompted, delegates readily, narrates and corrects
+more, and expands scope on its own judgment. Counter each:
+
+- **Delete every verification instruction.** Explicit "verify each step",
+  "double-check before responding", or "dispatch a subagent to verify"
+  compounds with behaviour the model already has: pure cost, no quality
+  gain. **This is a deletion, not a replacement** — see the verification
+  note below for the one case that survives.
+- **Delegation cap**: "Delegate only for large tasks that are genuinely
+  independent and parallelizable. Don't delegate work you can finish in a
+  handful of tool calls, and never use a subagent to verify your own work.
+  If one subagent suffices, use one; keep spawn counts low."
+- **Scope discipline**: "Deliver what was asked, at the scope intended.
+  Make routine judgment calls yourself; check in only when different
+  readings would lead to materially different work. If the request seems
+  mistaken, say so in a sentence and continue as asked rather than quietly
+  narrowing, widening, or transforming it."
+- **Corrections**: "Only correct an earlier statement when the error would
+  change the user's code, conclusions, or decisions. Otherwise make the fix
+  and move on without noting it."
+- **Length**: conversational output and written files both run longer than
+  on prior models, and lowering effort does *not* shorten them. For skills
+  that write documents: "Match document length to what the task needs;
+  don't pad with filler sections, redundant summaries, or boilerplate."
+
+**The verification carve-out.** "Don't verify your own work" is about the
+*same* model checking what it just produced. Verifying a **different**
+model's output is not self-verification and still pays — keep the
+`spec-verifier` gate wherever a GLM or worker-tier model wrote the code
+(`/task-glm`, `/task-glm-support`, mixed-tier `/worker` runs). Drop it when
+a T1 model did the work itself.
+
 **Planning**
 - T2/T3: "Before making any changes, read the relevant files and write a step-by-step implementation plan. Do not modify files until the plan is confirmed." *Gate: skip when the diff can be described in one sentence.*
 - T1 (inverse): "When you have enough information to act, act. Do not re-derive established facts, re-litigate decided questions, or narrate options you will not pursue."
 
 **Reasoning**
 - T3 only: "Reason through the problem inside `<thinking>` tags, then give your final result inside `<answer>` tags."
-- T2: no CoT scaffolding — raise reasoning effort to high/xhigh instead of prompting around it. With thinking off, avoid the word "think"; use consider/evaluate/reason through.
+- T2: no CoT scaffolding — control depth with the effort parameter, not prompt wording.
+- T1: thinking is **on by default**; `high` is the default effort. Reach for `low`/`medium` liberally as the primary cost lever wherever quality holds, and `xhigh` only for demanding agentic work. Effort governs *thinking*, not response length — to shorten output, ask for it explicitly. Never add a rule telling the model not to think or reason; on Opus 5 that increases tag leakage.
+- The "with thinking off, avoid the word think" workaround applies **only to T3 / third-party endpoints** now.
 
 **Progress updates**
 - T3: "After completing a task that involves tool use, provide a quick summary of the work done."
