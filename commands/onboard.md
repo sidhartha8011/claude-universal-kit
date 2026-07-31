@@ -28,6 +28,9 @@ sessions rely on most. Ensure the project CLAUDE.md points to the map and
 captures the project's hard rules.
 
 Then give me a short summary with any open questions, and wait before
-editing anything outside `.claude/`.
+editing anything outside `.claude/`. Flag anything in the map you inferred
+rather than confirmed, and ask me to check it — measured on 438 tasks,
+auto-generated context files cost ~3% success while human-corrected ones
+gained ~4%. The map is worth a few minutes of my attention once.
 
 $ARGUMENTS

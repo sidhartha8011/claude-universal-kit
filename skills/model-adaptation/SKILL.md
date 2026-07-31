@@ -47,6 +47,21 @@ Anything other than `api.anthropic.com` (z.ai, moonshot, …) is a third-party m
 
 ## Token discipline (all tiers — the lowest-cost path to the same result)
 
+**Cache shape beats token count.** Measured across ~2,900 billed agent runs
+(arXiv 2607.12161): cache create+read is ~**87%** of the bill, output ~10%,
+uncached input ~1%. One arm cut tokens 38.4% and still cost **more**. So:
+
+- **Don't churn the stable prefix mid-session.** `CLAUDE.md`, the map, and
+  loaded skills sit at the front of context; editing them mid-task
+  invalidates the cache and re-bills everything after. Batch such edits at
+  a natural break, or accept the re-read knowingly.
+- **Stable context first, volatile last.** Read the map and conventions
+  early; keep churning output (`git status`, logs, test runs) later in the
+  turn so it doesn't sit in front of everything else.
+- **Judge a change by cost, not token count.** Fewer tokens ≠ cheaper —
+  verify with `ccusage`, and treat any tool claiming a token-percentage win
+  without a cost number as unproven.
+
 - **Map, not codebase**: answer from `.claude/CODEBASE_MAP.md` first; open source files only for the parts you're changing. Read excerpts (offset/limit), not whole files.
 - **Delegate reading-heavy exploration** to a subagent (Explore-type) — conclusions come back, raw file contents never enter the main context. *T2/T3 only:* on T1 see the restraint block — those models already delegate readily and the nudge compounds.
 - **Library APIs: resolve, don't guess** — append "use context7" for any unfamiliar/current API (WP hooks, Next.js, package signatures). One doc lookup is cheaper than one wrong-signature retry loop.
@@ -74,6 +89,9 @@ more, and expands scope on its own judgment. Counter each:
   independent and parallelizable. Don't delegate work you can finish in a
   handful of tool calls, and never use a subagent to verify your own work.
   If one subagent suffices, use one; keep spawn counts low."
+  Fan-out measures at **2.6–5.9× the tokens and is never faster** (metered
+  logs, Systima Jul 2026) — delegate for coverage you can't get serially,
+  never for speed.
 - **Scope discipline**: "Deliver what was asked, at the scope intended.
   Make routine judgment calls yourself; check in only when different
   readings would lead to materially different work. If the request seems
@@ -93,6 +111,14 @@ model's output is not self-verification and still pays — keep the
 `spec-verifier` gate wherever a GLM or worker-tier model wrote the code
 (`/task-glm`, `/task-glm-support`, mixed-tier `/worker` runs). Drop it when
 a T1 model did the work itself.
+
+Anthropic's own page cuts both ways here: its capability notes praise
+"effective writer-verifier patterns" for multi-agent work while the
+subagent snippet forbids verification subagents — which reads as a *cost*
+objection to verifying trivial work, not a quality finding. So scope the
+gate rather than deleting it: end of task, never per-step, and not on small
+diffs. External deterministic gates (build, tests, type-check) are the part
+every source agrees on — those are checks, not instructions to be diligent.
 
 **Planning**
 - T2/T3: "Before making any changes, read the relevant files and write a step-by-step implementation plan. Do not modify files until the plan is confirmed." *Gate: skip when the diff can be described in one sentence.*
@@ -235,6 +261,20 @@ Use it when the plan has many mechanical steps and Claude quota is scarce.
 Briefs must be fully self-contained — the worker shares the filesystem,
 not the conversation.
 
+**Never let a worker-tier model orchestrate its own fan-out.** Cheap tiers
+degrade specifically on sub-agent delegation (0.42–0.45 vs 0.85 for
+Sonnet-class, arXiv 2607.06906) while staying near-parity on grounding and
+retrieval. So: frontier plans and orchestrates, GLM executes and retrieves.
+A GLM brief that says "spawn subagents to…" is the one shape to avoid —
+`glm-worker.sh` blocks the Agent/Task/Workflow tools for exactly this reason.
+
+The split is not a compromise: on an independent 211-task benchmark
+(Faros, Jun–Jul 2026) Claude Code driving GLM-5.2 scored **0.568 at
+$0.92/task** against **0.521 at $1.76** for the same harness on Opus 4.8 —
+the harness mattered more than the model.
+
 ## De-prescription rule
 
 On every model upgrade, re-run a representative task with the lower-tier layer removed and keep whichever output is better. Prune any static instruction that fails the test: *would removing it cause mistakes?*
+
+Prune on a calendar too, not only on upgrades — Claude Code's own system prompt shed >80% of its length across model generations. An audit of 74 real `CLAUDE.md` files found the dominant debt was **length and duplication**, not wrong rules: most contained no stale verification instructions at all. So when trimming, hunt repetition and dead weight first — deleting one wrong rule is rarer than deleting three copies of a right one.
